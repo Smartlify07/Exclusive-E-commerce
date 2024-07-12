@@ -1,4 +1,5 @@
 import Categories from "./Categories";
+import FlashSales from "./Flashsales/FlashSales";
 import PromoCarousel from "./PromoCarousel";
 
 const Homepage = () => {
@@ -9,6 +10,8 @@ const Homepage = () => {
           <Categories />
           <PromoCarousel />
         </div>
+
+        <FlashSales />
       </div>
     </main>
   );
