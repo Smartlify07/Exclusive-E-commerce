@@ -18,7 +18,6 @@ const FlashSalesTimer = () => {
       setHours(Math.floor((time / (1000 * 60 * 60)) % 24));
       setMinutes(Math.floor((time / 1000 / 60) % 60));
       setSeconds(Math.floor((time / 1000) % 60));
-      console.log(days, minutes);
     }
   };
   useEffect(() => {

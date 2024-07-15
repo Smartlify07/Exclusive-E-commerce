@@ -6,6 +6,8 @@ import {
 } from "react-router-dom";
 import RootLayout from "./layout/RootLayout";
 import Homepage from "./pages/HomePage/Homepage";
+import { Provider } from "react-redux";
+import { store } from "./app/store";
 
 function App() {
   const router = createBrowserRouter(
@@ -17,7 +19,9 @@ function App() {
   );
   return (
     <>
-      <RouterProvider router={router}></RouterProvider>
+      <Provider store={store}>
+        <RouterProvider router={router}></RouterProvider>
+      </Provider>
     </>
   );
 }
