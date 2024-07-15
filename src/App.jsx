@@ -5,11 +5,12 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import RootLayout from "./layout/RootLayout";
-import Homepage from "./pages/HomePage/Homepage";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
+import { lazy } from "react";
 
 function App() {
+  const Homepage = lazy(() => import("./pages/HomePage/Homepage"));
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route element={<RootLayout />}>

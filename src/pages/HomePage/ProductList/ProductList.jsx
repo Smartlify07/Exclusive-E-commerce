@@ -1,20 +1,17 @@
 /* eslint-disable react/prop-types */
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchProducts,
   selectAllProducts,
-  //   selectAllFlashSaleProducts,
   selectProductsStatus,
 } from "../../../app/products/productsSlice";
-import ProductCard from "./ProductCard";
-import useDiscount from "../../../hooks/useDiscount";
-import { getProductDiscount } from "../../../../utils/functions/getDiscount";
 import { flashSalesProducts } from "../../../../utils/functions/getProductCategories";
 
 const ProductList = ({ type, currentSlide }) => {
   const dispatch = useDispatch();
   const products = useSelector(selectAllProducts);
+  const ProductCard = lazy(() => import("./ProductCard"));
   //   const flashSalesProducts = useSelector(selectAllFlashSaleProducts);
   //   console.log(flashSalesProducts);
 
@@ -34,7 +31,12 @@ const ProductList = ({ type, currentSlide }) => {
         style={{ transform: `translateX(-${currentSlide * 10}%)` }}
       >
         {flashSales.map((product) => (
-          <ProductCard key={product.id} {...product} />
+          <Suspense
+            key={product.id}
+            fallback={<p className="text-xl">Loading...</p>}
+          >
+            <ProductCard key={product.id} {...product} />
+          </Suspense>
         ))}
       </div>
     </div>

@@ -1,18 +1,22 @@
-import Categories from "./Categories";
-import FlashSales from "./Flashsales/FlashSales";
-import PromoCarousel from "./PromoCarousel";
+import { lazy, Suspense } from "react";
+import HomePageSkeleton from "./HomePageSkeleton";
 
 const Homepage = () => {
+  const Categories = lazy(() => import("./Categories"));
+  const FlashSales = lazy(() => import("./Flashsales/FlashSales"));
+  const PromoCarousel = lazy(() => import("./PromoCarousel"));
   return (
     <main className="py-10 font-poppins flex flex-col items-center">
-      <div className="md:w-10/12">
-        <div className="flex justify-between">
-          <Categories />
-          <PromoCarousel />
-        </div>
+      <Suspense fallback={<HomePageSkeleton />}>
+        <div className="md:w-10/12">
+          <div className="flex justify-between">
+            <Categories />
+            <PromoCarousel />
+          </div>
 
-        <FlashSales />
-      </div>
+          <FlashSales />
+        </div>
+      </Suspense>
     </main>
   );
 };
