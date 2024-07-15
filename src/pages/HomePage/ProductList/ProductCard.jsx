@@ -1,58 +1,57 @@
+/* eslint-disable react/prop-types */
+import ProductActions from "../../../components/ProductActions";
+import AddToCartButton from "../../../components/Buttons/AddToCartButton";
+import useDiscount from "../../../hooks/useDiscount";
+import DiscountBadge from "../../../components/DiscountBadge";
 import { useState } from "react";
 
-const ProductCard = ({
-  name,
-  actualPrice,
-  image,
-  discountedPrice,
-  discountPercentage,
-}) => {
+const ProductCard = ({ name, actualPrice, image, discountedPrice }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const handleIsHovered = () => {
+  const addHoverEffect = () => {
     setIsHovered(true);
   };
+  const removeHoverEffect = () => {
+    setIsHovered(false);
+  };
 
+  const discountPercentage = useDiscount({ actualPrice, discountedPrice });
   return (
     <div
-      className="cursor-pointer"
-      onMouseOut={() => setIsHovered(false)}
-      onMouseOver={handleIsHovered}
+      className="cursor-pointer  lg:w-[270px]"
+      onMouseOut={removeHoverEffect}
+      onMouseOver={addHoverEffect}
     >
-      <div className="bg-[#f5f5f5] overflow-hidden relative rounded-md flex flex-col p-3 ">
+      <div className="bg-[#f5f5f5] overflow-hidden w-full relative rounded-md flex flex-col p-3 ">
         <div className="w-full  flex justify-between items-start">
-          <span className="bg-red rounded-sm text-white text-xs py-1 px-2">
-            -50%
-          </span>
-
-          <div className="flex flex-col gap-2 ">
-            <div className="bg-white rounded-full flex items-center justify-center w-6 h-6">
-              <img
-                src="/images/icons/hearticon.svg"
-                alt="hearticon"
-                className=""
-              />
-            </div>
-            <div className="bg-white rounded-full flex items-center justify-center w-6 h-6">
-              <img
-                src="/images/icons/eyeicon.svg"
-                className="lg:w-[80px]"
-                alt="eyeicon"
-              />
-            </div>
-          </div>
+          <DiscountBadge discount={discountPercentage} />
+          <ProductActions />
         </div>
 
-        <div className=" relative -top-10 self-center flex items-center lg:w-[190px] lg:h-[180px]">
-          <img src={image} className="w-full object-contain" alt="productImg" />
+        <div className=" relative -top-4 self-center flex justify-center items-center lg:w-[190px] lg:h-[180px]">
+          <img
+            src={image}
+            className="lg:w-[170px] lg:h-[129px] object-contain"
+            alt="productImg"
+          />
         </div>
 
-        <button
-          className={`absolute bg-black w-full ${
-            isHovered ? "bottom-0" : "-bottom-14"
-          } left-0 py-3 flex justify-center rounded-b-md transition-all `}
+        <AddToCartButton isHovered={isHovered} />
+      </div>
+
+      <div className="flex flex-col mt-3 gap-1">
+        <h1
+          role="productName"
+          className="text-black capitalize  font-medium text-base"
         >
-          <p className="text-white font-medium">Add To Cart</p>
-        </button>
+          {name}
+        </h1>
+
+        <div className="flex items-center gap-3">
+          <p className="text-red font-medium">$ {discountedPrice}</p>
+          <p className="text-gray-400 font-medium line-through">
+            $ {actualPrice}
+          </p>
+        </div>
       </div>
     </div>
   );

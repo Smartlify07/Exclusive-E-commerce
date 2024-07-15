@@ -1,6 +1,7 @@
 import {
   createAsyncThunk,
   createEntityAdapter,
+  createSelector,
   createSlice,
 } from "@reduxjs/toolkit";
 
@@ -37,6 +38,7 @@ const productsSlice = createSlice({
       .addCase(fetchProducts.fulfilled, (state, action) => {
         const products = action.payload.map((product) => product);
         console.log(products);
+
         productsAdapter.upsertMany(state, products);
       })
       .addCase(fetchProducts.rejected, (state, action) => {
@@ -50,4 +52,5 @@ export const { selectAll: selectAllProducts, selectById: selectProductById } =
   productsAdapter.getSelectors((state) => state.products);
 
 export const selectProductsStatus = (state) => state.productsStatus;
+
 export default productsSlice.reducer;
