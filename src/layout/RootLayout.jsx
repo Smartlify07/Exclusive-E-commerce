@@ -13,7 +13,7 @@ const RootLayout = () => {
 
       <Navbar />
 
-      <Suspense fallback={<h1>Loading...</h1>}>
+      <Suspense>
         <Outlet />
       </Suspense>
     </>

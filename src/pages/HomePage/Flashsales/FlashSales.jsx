@@ -1,13 +1,14 @@
 /* eslint-disable react/prop-types */
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import ProductList from "../ProductList/ProductList";
 import FlashSalesTimer from "./FlashSalesTimer";
-import { useState } from "react";
+import { lazy, memo, Suspense, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectAllProducts } from "../../../app/products/productsSlice";
 import { Link } from "react-router-dom";
+import ProductCardSkeleton from "../ProductList/ProductCardSkeleton";
 
 const FlashSales = () => {
+  const ProductList = lazy(() => import("../ProductList/ProductList"));
   const products = useSelector(selectAllProducts);
   const [currentSlide, setCurrentSlide] = useState(0);
   const handlePrevClick = () => {
@@ -38,7 +39,7 @@ const FlashSales = () => {
             <FlashSalesTimer />
           </div>
 
-          <div className="flex items-center gap-2 justify-self-end border">
+          <div className="flex items-center gap-2 justify-self-end ">
             <button className="bg-gray-300 flex items-center justify-center rounded-full w-10 h-10">
               <FaArrowLeft />
             </button>
@@ -48,11 +49,17 @@ const FlashSales = () => {
           </div>
         </div>
 
-        <ProductList currentSlide={currentSlide} type={"flashsales"} />
+        <Suspense
+          fallback={
+            <div className="w-full h-[300px] bg-gray-100 rounded-sm"></div>
+          }
+        >
+          <ProductList currentSlide={currentSlide} type={"flashsales"} />
+        </Suspense>
 
         <Link
           to={"/products"}
-          className="text-white font-medium bg-red rounded-sm p-3 mt-3 self-center"
+          className="text-white font-medium bg-red rounded-sm px-12 py-3 mt-3 self-center"
         >
           View All Products
         </Link>
@@ -61,4 +68,4 @@ const FlashSales = () => {
   );
 };
 
-export default FlashSales;
+export default memo(FlashSales);

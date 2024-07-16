@@ -4,25 +4,20 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchProducts,
   selectAllProducts,
-  selectProductsStatus,
 } from "../../../app/products/productsSlice";
 import { flashSalesProducts } from "../../../../utils/functions/getProductCategories";
+import ProductCardSkeleton from "./ProductCardSkeleton";
 
 const ProductList = ({ type, currentSlide }) => {
   const dispatch = useDispatch();
   const products = useSelector(selectAllProducts);
   const ProductCard = lazy(() => import("./ProductCard"));
-  //   const flashSalesProducts = useSelector(selectAllFlashSaleProducts);
-  //   console.log(flashSalesProducts);
 
-  const status = useSelector(selectProductsStatus);
   const flashSales = flashSalesProducts(products);
 
   useEffect(() => {
     dispatch(fetchProducts());
-  }, []);
-
-  console.log(currentSlide);
+  }, [dispatch]);
 
   return (
     <div className={`container overflow-x-hidden w-full   mx-auto py-8 `}>
@@ -31,10 +26,7 @@ const ProductList = ({ type, currentSlide }) => {
         style={{ transform: `translateX(-${currentSlide * 10}%)` }}
       >
         {flashSales.map((product) => (
-          <Suspense
-            key={product.id}
-            fallback={<p className="text-xl">Loading...</p>}
-          >
+          <Suspense key={product.id} fallback={<ProductCardSkeleton />}>
             <ProductCard key={product.id} {...product} />
           </Suspense>
         ))}

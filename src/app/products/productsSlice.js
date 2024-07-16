@@ -52,5 +52,5 @@ export const { selectAll: selectAllProducts, selectById: selectProductById } =
   productsAdapter.getSelectors((state) => state.products);
 
 export const selectProductsStatus = (state) => state.productsStatus;
-
+export const selectProductsError = (state) => state.productsError;
 export default productsSlice.reducer;
