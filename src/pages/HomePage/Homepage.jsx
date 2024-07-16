@@ -1,8 +1,9 @@
 import { lazy, Suspense } from "react";
 import HomePageSkeleton from "./HomePageSkeleton";
+import Categories from "./Categories/Categories";
 
 const Homepage = () => {
-  const CategoriesList = lazy(() => import("./CategoriesList"));
+  const CategoriesLinks = lazy(() => import("./CategoriesLinks"));
   const FlashSales = lazy(() => import("./Flashsales/FlashSales"));
   const PromoCarousel = lazy(() => import("./PromoCarousel"));
   return (
@@ -10,13 +11,14 @@ const Homepage = () => {
       <Suspense fallback={<HomePageSkeleton />}>
         <div className="md:w-10/12">
           <div className="flex justify-between">
-            <CategoriesList />
+            <CategoriesLinks />
             <PromoCarousel />
           </div>
 
           <FlashSales />
 
           <div className="border border-gray-300 w-full"></div>
+          <Categories />
         </div>
       </Suspense>
     </main>

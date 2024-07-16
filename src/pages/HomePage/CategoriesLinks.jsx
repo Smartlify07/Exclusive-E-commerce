@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const CategoriesList = () => {
+const CategoriesLinks = () => {
   return (
     <aside className="border-r-[0.5px] border-r-[#b3b3b3]  md:pr-16">
       <ul className="flex flex-col gap-4 text-black text-base font-normal">
@@ -36,4 +36,4 @@ const CategoriesList = () => {
   );
 };
 
-export default CategoriesList;
+export default CategoriesLinks;

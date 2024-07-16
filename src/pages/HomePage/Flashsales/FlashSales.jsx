@@ -5,7 +5,8 @@ import { lazy, memo, Suspense, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectAllProducts } from "../../../app/products/productsSlice";
 import { Link } from "react-router-dom";
-import ProductCardSkeleton from "../ProductList/ProductCardSkeleton";
+import Ribbon from "../../../components/Ribbon";
+import SliderControls from "../../../components/SliderControls";
 
 const FlashSales = () => {
   const ProductList = lazy(() => import("../ProductList/ProductList"));
@@ -27,7 +28,7 @@ const FlashSales = () => {
     <section className="flex flex-col py-20 items-center">
       <div className="md:w-full  flex flex-col gap-5">
         <header className="flex items-center gap-1">
-          <span className="w-5 h-12 rounded-md bg-red"></span>
+          <Ribbon />
           <h3 className="text-red font-semibold text-base">Today&apos;s</h3>
         </header>
 
@@ -39,14 +40,7 @@ const FlashSales = () => {
             <FlashSalesTimer />
           </div>
 
-          <div className="flex items-center gap-2 justify-self-end ">
-            <button className="bg-gray-300 flex items-center justify-center rounded-full w-10 h-10">
-              <FaArrowLeft />
-            </button>
-            <button className="bg-gray-300 flex items-center justify-center rounded-full w-10 h-10">
-              <FaArrowRight />
-            </button>
-          </div>
+          <SliderControls />
         </div>
 
         <Suspense
