@@ -1,4 +1,3 @@
-import CarouselControls from "../../../components/CarouselControls";
 import Ribbon from "../../../components/Ribbon";
 import SliderControls from "../../../components/SliderControls";
 import CategoryIcon from "./CategoryIcon";

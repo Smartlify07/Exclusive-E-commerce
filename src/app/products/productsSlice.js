@@ -36,14 +36,19 @@ const productsSlice = createSlice({
         state.productsStatus = "pending";
       })
       .addCase(fetchProducts.fulfilled, (state, action) => {
-        const products = action.payload.map((product) => product);
-        console.log(products);
+        state.productsStatus = "successful";
+        const products = action.payload.map((product) => ({
+          ...product,
+          saleStart: product?.saleStart?.seconds, // Create a serializable property
+          saleEnd: product?.saleEnd?.seconds,
+        }));
 
         productsAdapter.upsertMany(state, products);
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.productsStatus = "rejected";
-        state.productsError = action.error;
+        console.log(action.error.message);
+        state.productsError = action.error.message;
       });
   },
 });
@@ -51,6 +56,6 @@ const productsSlice = createSlice({
 export const { selectAll: selectAllProducts, selectById: selectProductById } =
   productsAdapter.getSelectors((state) => state.products);
 
-export const selectProductsStatus = (state) => state.productsStatus;
-export const selectProductsError = (state) => state.productsError;
+export const selectProductsStatus = (state) => state.products.productsStatus;
+export const selectProductsError = (state) => state.products.productsError;
 export default productsSlice.reducer;

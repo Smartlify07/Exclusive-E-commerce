@@ -1,6 +1,6 @@
 import { getProductDiscount } from "./getDiscount";
 
-export const flashSalesProducts = (products) => {
+export const getFlashSalesProducts = (products) => {
   const filteredProducts = products.filter((product) => {
     const discountPercentage = getProductDiscount(
       product.actualPrice,
@@ -20,5 +20,15 @@ export const flashSalesProducts = (products) => {
     );
 
     return discountPercentageB - discountPercentageA;
+  });
+};
+
+export const getBestSellingProducts = (products) => {
+  const filteredProducts = products.filter(
+    (product) => product.revenue > 50000
+  );
+
+  return filteredProducts.sort((a, b) => {
+    return b.revenue - a.revenue;
   });
 };

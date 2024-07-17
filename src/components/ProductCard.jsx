@@ -1,11 +1,18 @@
 /* eslint-disable react/prop-types */
-import ProductActions from "../../../components/ProductActions";
-import AddToCartButton from "../../../components/Buttons/AddToCartButton";
-import useDiscount from "../../../hooks/useDiscount";
-import DiscountBadge from "../../../components/DiscountBadge";
+import useDiscount from "../hooks/useDiscount";
+import AddToCartButton from "./Buttons/AddToCartButton";
+import DiscountBadge from "./DiscountBadge";
+import ProductActions from "./ProductActions";
 import { useState } from "react";
 
-const ProductCard = ({ name, actualPrice, image, discountedPrice }) => {
+const ProductCard = ({
+  name,
+  actualPrice,
+  image,
+  discountedPrice,
+  showDiscountBadge,
+  showActualPrice,
+}) => {
   const [isHovered, setIsHovered] = useState(false);
   const addHoverEffect = () => {
     setIsHovered(true);
@@ -22,12 +29,12 @@ const ProductCard = ({ name, actualPrice, image, discountedPrice }) => {
       onMouseOver={addHoverEffect}
     >
       <div className="bg-[#f5f5f5] overflow-hidden w-full relative rounded-md flex flex-col p-3 ">
-        <div className="w-full  flex justify-between items-start">
-          <DiscountBadge discount={discountPercentage} />
+        <div className="w-full relative  flex justify-between items-start">
+          {showDiscountBadge && <DiscountBadge discount={discountPercentage} />}
           <ProductActions />
         </div>
 
-        <div className=" relative -top-4 self-center flex justify-center items-center lg:w-[190px] lg:h-[180px]">
+        <div className=" relative -top-2 self-center flex justify-center items-center lg:w-[190px] lg:h-[180px]">
           <img
             src={image}
             className="lg:w-[170px] lg:h-[129px] object-contain"

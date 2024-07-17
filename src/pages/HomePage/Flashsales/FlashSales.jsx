@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import FlashSalesTimer from "./FlashSalesTimer";
 import { lazy, memo, Suspense, useState } from "react";
 import { useSelector } from "react-redux";
@@ -7,21 +6,26 @@ import { selectAllProducts } from "../../../app/products/productsSlice";
 import { Link } from "react-router-dom";
 import Ribbon from "../../../components/Ribbon";
 import SliderControls from "../../../components/SliderControls";
+import { getFlashSalesProducts } from "../../../../utils/functions/getProductCategories";
+import withProductList from "../../../HOCs/withProductList";
 
 const FlashSales = () => {
-  const ProductList = lazy(() => import("../ProductList/ProductList"));
+  const FlashSalesProductsList = lazy(() => import("./FlashSalesProductsList"));
+  const ProductList = withProductList(FlashSalesProductsList);
   const products = useSelector(selectAllProducts);
+  const flashSaleProducts = getFlashSalesProducts(products);
   const [currentSlide, setCurrentSlide] = useState(0);
+
   const handlePrevClick = () => {
     setCurrentSlide((prevIndex) =>
-      prevIndex === 0 ? products.length - 2 : prevIndex - 1
+      prevIndex === 0 ? products.length - 1 : prevIndex - 1
     );
   };
 
   const handleNextClick = () => {
     console.log(currentSlide);
     setCurrentSlide((prevIndex) =>
-      prevIndex === products.length - 3 ? 0 : prevIndex + 1
+      prevIndex === flashSaleProducts.length - 1 ? 0 : prevIndex + 1
     );
   };
   return (
@@ -40,15 +44,20 @@ const FlashSales = () => {
             <FlashSalesTimer />
           </div>
 
-          <SliderControls />
+          {flashSaleProducts.length > 5 && (
+            <SliderControls
+              leftSlide={handlePrevClick}
+              rightSlide={handleNextClick}
+            />
+          )}
         </div>
 
         <Suspense
           fallback={
-            <div className="w-full h-[300px] bg-gray-100 rounded-sm"></div>
+            <div className="bg-gray-100 w-full h-[300px] rounded-sm"></div>
           }
         >
-          <ProductList currentSlide={currentSlide} type={"flashsales"} />
+          <ProductList type="flashsales" />
         </Suspense>
 
         <Link

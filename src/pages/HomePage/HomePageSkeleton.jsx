@@ -13,6 +13,12 @@ const HomePageSkeleton = () => {
       </div>
 
       <div className="bg-gray-100 rounded-sm w-full h-[400px] mt-6"></div>
+      <div className="bg-gray-100 rounded-sm w-full h-[400px] mt-6"></div>
+      <div className="bg-gray-100 rounded-sm w-full h-[400px] mt-6"></div>
+      <div className="bg-gray-100 rounded-sm w-full h-[400px] mt-6"></div>
+      <div className="bg-gray-100 rounded-sm w-full h-[400px] mt-6"></div>
+      <div className="bg-gray-100 rounded-sm w-full h-[400px] mt-6"></div>
+      <div className="bg-gray-100 rounded-sm w-full h-[400px] mt-6"></div>
     </div>
   );
 };

@@ -4,6 +4,7 @@ import NonAuthenticatedNavbar from "../components/Navbar/NonAuthenticatedNavbar"
 import PromoBanner from "../components/PromoBanner";
 import { withAuthNavbar } from "../HOCs/withAuth";
 import { Suspense } from "react";
+import Footer from "../components/Footer/Footer";
 
 const RootLayout = () => {
   const Navbar = withAuthNavbar(AuthenticatedNavbar, NonAuthenticatedNavbar);
@@ -16,6 +17,8 @@ const RootLayout = () => {
       <Suspense>
         <Outlet />
       </Suspense>
+
+      <Footer />
     </>
   );
 };
