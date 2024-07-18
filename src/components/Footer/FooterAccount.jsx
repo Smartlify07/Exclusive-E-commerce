@@ -8,7 +8,7 @@ const FooterAccount = () => {
       </header>
 
       <div className="flex flex-col gap-4">
-        <Link className="capitalize text-[#fafafa] text-base" to={"/"}>
+        <Link className="capitalize text-[#fafafa] text-base" to={"/account"}>
           My account
         </Link>
         <Link className="capitalize text-[#fafafa] text-base" to={"/Login"}>

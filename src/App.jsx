@@ -16,6 +16,7 @@ function App() {
   const SignUp = lazy(() => import("./pages/SignUp/SignUp"));
   const Login = lazy(() => import("./pages/Login/Login"));
   const NotFound = lazy(() => import("./pages/ErrorPages/NotFound"));
+
   const router = createBrowserRouter(
     createRoutesFromElements(
       <>
@@ -61,11 +62,9 @@ function App() {
     )
   );
   return (
-    <>
-      <Provider store={store}>
-        <RouterProvider router={router}></RouterProvider>
-      </Provider>
-    </>
+    <Provider store={store}>
+      <RouterProvider router={router}></RouterProvider>
+    </Provider>
   );
 }
 

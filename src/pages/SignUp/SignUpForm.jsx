@@ -1,12 +1,17 @@
 import { Form, Formik } from "formik";
 import TextInput from "../../components/Form/TextInput";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
+import { selectUser, signUp } from "../../app/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const SignUpForm = () => {
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col gap-3 self-center lg:w-4/12">
-      <h1 className="text-black font-medium text-4xl">Create an account</h1>
+      <h1 className="text-black font-medium text-3xl">Create an account</h1>
       <p className="text-base">Enter your details below</p>
 
       <Formik
@@ -18,7 +23,22 @@ const SignUpForm = () => {
         }}
         onSubmit={(values) => {
           console.log("submit");
-          console.log(values);
+
+          const handleSignUp = () => {
+            const email = values.email;
+            const password = values.password;
+            const name = values.name;
+            dispatch(signUp({ email, password, name }));
+            console.log(typeof values.password);
+          };
+
+          if (user) {
+            setTimeout(() => {
+              navigate("/");
+            }, 2000);
+          }
+
+          handleSignUp();
         }}
         validationSchema={Yup.object({
           name: Yup.string().required("Name is required"),
@@ -39,7 +59,7 @@ const SignUpForm = () => {
             ),
         })}
       >
-        <Form className="flex flex-col gap-4">
+        <Form className="flex flex-col gap-4 ">
           <div className="mt-5 flex flex-col gap-5">
             <TextInput placeholder="John Doe" type="text" name="name" />
 
