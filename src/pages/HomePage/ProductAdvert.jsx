@@ -5,7 +5,7 @@ const ProductAdvert = () => {
     <div className="w-full bg-black flex flex-col items-center py-16 px-10 lg:flex-row">
       <div className="flex  flex-col gap-3">
         <h3 className="text-[#00FF66] font-semibold text-sm">Categories</h3>
-        <h1 className="text-white font-semibold text-5xl w-9/12">
+        <h1 className="text-white font-semibold text-5xl lg:w-9/12">
           Enhance Your Music Experience
         </h1>
 
