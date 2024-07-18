@@ -1,13 +1,22 @@
 import { Link } from "react-router-dom";
-import Navbar from "./Navbar";
+import DesktopNavbar from "./DesktopNavbar";
+import MobileNavbar from "./MobileNavbar";
 
 const AuthenticatedNavbar = () => {
   return (
-    <Navbar>
-      <Link>
-        <img src="/images/icons/usericon.svg" alt="" />
-      </Link>
-    </Navbar>
+    <>
+      <DesktopNavbar>
+        <Link>
+          <img src="/images/icons/usericon.svg" alt="" />
+        </Link>
+      </DesktopNavbar>
+
+      <MobileNavbar>
+        <Link>
+          <img src="/images/icons/usericon.svg" alt="" />
+        </Link>
+      </MobileNavbar>
+    </>
   );
 };
 

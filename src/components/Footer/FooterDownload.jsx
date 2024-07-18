@@ -10,7 +10,7 @@ const FooterDownload = () => {
           Save $3 with App New User Only
         </p>
 
-        <div className="flex flex-col items-center gap-2 lg:flex-row">
+        <div className="flex flex-col items-center gap-4 lg:gap-2 lg:flex-row">
           <img src="/images/Qr Code.png" alt="qr code" />
 
           <div className="flex flex-col gap-2">
@@ -19,7 +19,7 @@ const FooterDownload = () => {
           </div>
         </div>
 
-        <div className="flex items-center mt-3 gap-[30px]">
+        <div className="flex self-center items-center mt-3 gap-[30px] lg:self-start">
           <img src="/images/icons/Icon-Facebook.svg" alt="facebook" />
           <img src="/images/icons/Icon-Twitter.svg" alt="Twitter" />
           <img src="/images/icons/icon-instagram.svg" alt="instagram" />

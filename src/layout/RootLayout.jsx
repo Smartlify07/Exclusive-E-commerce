@@ -7,9 +7,10 @@ import { lazy, Suspense } from "react";
 
 const RootLayout = () => {
   const Navbar = withAuthNavbar(AuthenticatedNavbar, NonAuthenticatedNavbar);
+
   const Footer = lazy(() => import("../components/Footer/Footer"));
   return (
-    <>
+    <main role="root" className="overflow-x-hidden">
       <PromoBanner />
 
       <Navbar />
@@ -21,7 +22,7 @@ const RootLayout = () => {
       <Suspense fallback={<div className="w-full h-[300px] bg-gray-100"></div>}>
         <Footer />
       </Suspense>
-    </>
+    </main>
   );
 };
 
