@@ -11,7 +11,7 @@ const SignUpForm = () => {
   const navigate = useNavigate();
   return (
     <div className="flex flex-col gap-3 self-center lg:w-4/12">
-      <h1 className="text-black font-medium text-4xl">Create an account</h1>
+      <h1 className="text-black font-medium text-3xl">Create an account</h1>
       <p className="text-base">Enter your details below</p>
 
       <Formik
@@ -59,7 +59,7 @@ const SignUpForm = () => {
             ),
         })}
       >
-        <Form className="flex flex-col gap-4">
+        <Form className="flex flex-col gap-4 ">
           <div className="mt-5 flex flex-col gap-5">
             <TextInput placeholder="John Doe" type="text" name="name" />
 

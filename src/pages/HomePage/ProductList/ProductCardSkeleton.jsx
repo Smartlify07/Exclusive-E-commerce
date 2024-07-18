@@ -1,7 +1,7 @@
 const ProductCardSkeleton = () => {
   return (
-    <div className="cursor-pointer  lg:w-[270px]">
-      <div className="bg-[#f5f5f5] overflow-hidden w-full relative rounded-md flex flex-col p-3 ">
+    <div className="cursor-pointer   lg:w-[270px]">
+      <div className="bg-[#f5f5f5] h-[235px] overflow-hidden w-full relative rounded-md flex flex-col p-3 lg:h-auto ">
         <div className="w-full  flex justify-between items-start bg-gray-50">
           <div className="w-3 h-4"></div>
           <div className="flex flex-col gap-3">

@@ -1,5 +1,5 @@
 const Wishlist = () => {
-  return <div>Wishlist</div>;
+  return <main className="py-5 lg:py-10"></main>;
 };
 
 export default Wishlist;

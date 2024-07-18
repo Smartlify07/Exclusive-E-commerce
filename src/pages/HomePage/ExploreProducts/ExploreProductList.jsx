@@ -13,8 +13,6 @@ const ExploreProductList = () => {
     </Suspense>
   ));
 
-  console.log(products);
-
   return (
     <div
       className={`transition-all w-full grid   grid-auto-fit gap-[30px] transform lg:grid-auto-fit-lg lg:justify-items-center`}
