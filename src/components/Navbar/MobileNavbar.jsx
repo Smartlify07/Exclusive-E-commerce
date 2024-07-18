@@ -26,7 +26,7 @@ const MobileNavbar = ({ children }) => {
           <span className="bg-black w-7 h-1"></span>
         </button>
         <ul
-          className={`flex flex-col gap-5 absolute top-10 bg-gray-100 backdrop-filter backdrop-blur-sm rounded-sm  bg-opacity-10 bg-clip-padding px-4 py-4 border w-11/12 transition-all transform  ${
+          className={`flex flex-col gap-5 absolute top-10 bg-gray-100 backdrop-filter backdrop-blur-sm rounded-sm  bg-opacity-10 bg-clip-padding px-4 py-4 border w-11/12 z-[1000] transition-all transform  ${
             toggled ? `translate-x-[20%]` : "translate-x-[200%]"
           }`}
         >
@@ -36,13 +36,13 @@ const MobileNavbar = ({ children }) => {
             </NavLink>
           </li>
           <li className="text-black font-normal text-base">
-            <NavLink>About</NavLink>
+            <NavLink to={"/about"}>About</NavLink>
           </li>
           <li className="text-black font-normal text-base">
-            <NavLink>Contact</NavLink>
+            <NavLink to={"/contact"}>Contact</NavLink>
           </li>
           <li className="text-black font-normal text-base">
-            <NavLink>Sign Up</NavLink>
+            <NavLink to={"/signup"}>Sign Up</NavLink>
           </li>
           <SearchBar />
           <ActionIcons>{children}</ActionIcons>

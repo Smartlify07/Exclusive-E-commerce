@@ -12,18 +12,21 @@ const DesktopNavbar = ({ children }) => {
         <Logo />
         <ul className="hidden lg:flex  items-center gap-10 ">
           <li className="text-black font-normal text-base">
-            <NavLink className={({ isActive }) => isActive && activeNavClass}>
+            <NavLink
+              to={"/"}
+              className={({ isActive }) => isActive && activeNavClass}
+            >
               Home
             </NavLink>
           </li>
           <li className="text-black font-normal text-base">
-            <NavLink>About</NavLink>
+            <NavLink to={"/about"}>About</NavLink>
           </li>
           <li className="text-black font-normal text-base">
-            <NavLink>Contact</NavLink>
+            <NavLink to={"/contact"}>Contact</NavLink>
           </li>
           <li className="text-black font-normal text-base">
-            <NavLink>Sign Up</NavLink>
+            <NavLink to={"/signup"}>Sign Up</NavLink>
           </li>
         </ul>
         <div className="hidden lg:flex items-center gap-6 ">
