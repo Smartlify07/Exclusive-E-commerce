@@ -1,8 +1,11 @@
+import { useSelector } from "react-redux";
+import { selectUser } from "../app/user/userSlice";
+
 export const withAuthNavbar = (AuthenticatedNavbar, NonAuthenticatedNavbar) => {
   const WithAuthNavbar = () => {
-    const isLoggedIn = true;
+    const user = useSelector(selectUser);
 
-    if (!isLoggedIn) {
+    if (!user) {
       return <NonAuthenticatedNavbar />;
     } else {
       return <AuthenticatedNavbar />;

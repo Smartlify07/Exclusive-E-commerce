@@ -17,7 +17,7 @@ const FooterQuickLinks = () => {
         <Link className="capitalize text-[#fafafa] text-base" to={"/faq"}>
           FAQ
         </Link>
-        <Link className="capitalize text-[#fafafa] text-base" to={"/Contact"}>
+        <Link className="capitalize text-[#fafafa] text-base" to={"/contact"}>
           Contact
         </Link>
       </div>

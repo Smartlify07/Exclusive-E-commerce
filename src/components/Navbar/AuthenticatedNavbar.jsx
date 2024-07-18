@@ -6,14 +6,14 @@ const AuthenticatedNavbar = () => {
   return (
     <>
       <DesktopNavbar>
-        <Link>
-          <img src="/images/icons/usericon.svg" alt="" />
+        <Link to={"/account"}>
+          <img src="/images/icons/usericon.svg" alt="usericon" />
         </Link>
       </DesktopNavbar>
 
       <MobileNavbar>
-        <Link>
-          <img src="/images/icons/usericon.svg" alt="" />
+        <Link to={"/account"}>
+          <img src="/images/icons/usericon.svg" alt="usericon" />
         </Link>
       </MobileNavbar>
     </>

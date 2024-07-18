@@ -1,9 +1,14 @@
 import { Form, Formik } from "formik";
 import TextInput from "../../components/Form/TextInput";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
+import { selectUser, signUp } from "../../app/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const SignUpForm = () => {
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col gap-3 self-center lg:w-4/12">
       <h1 className="text-black font-medium text-4xl">Create an account</h1>
@@ -18,7 +23,20 @@ const SignUpForm = () => {
         }}
         onSubmit={(values) => {
           console.log("submit");
-          console.log(values);
+
+          const handleSignUp = () => {
+            const email = values.email;
+            const password = values.password;
+            const name = values.name;
+            dispatch(signUp({ email, password, name }));
+            console.log(typeof values.password);
+          };
+
+          if (user) {
+            navigate("/");
+          }
+
+          handleSignUp();
         }}
         validationSchema={Yup.object({
           name: Yup.string().required("Name is required"),
