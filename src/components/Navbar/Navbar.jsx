@@ -7,10 +7,10 @@ import ActionIcons from "../ActionIcons";
 const Navbar = ({ children }) => {
   const activeNavClass = `border-b border-b-black py-1`;
   return (
-    <nav className="flex flex-col pt-10 pb-5 font-poppins border-b border-[#E3E3E3] md:items-center">
-      <div className="flex items-center md:w-10/12 md:justify-between">
+    <nav className="flex flex-col items-center pt-10 pb-5 font-poppins border-b border-[#E3E3E3] md:items-center">
+      <div className="flex justify-between items-center w-10/12 md:w-11/12 lg:w-10/12 md:justify-between">
         <Logo />
-        <ul className="flex items-center gap-10 ">
+        <ul className="hidden lg:flex  items-center gap-10 ">
           <li className="text-black font-normal text-base">
             <NavLink className={({ isActive }) => isActive && activeNavClass}>
               Home
@@ -26,9 +26,14 @@ const Navbar = ({ children }) => {
             <NavLink>Sign Up</NavLink>
           </li>
         </ul>
-        <div className="flex items-center gap-6 ">
+        <div className="hidden lg:flex items-center gap-6 ">
           <SearchBar />
           <ActionIcons>{children}</ActionIcons>
+        </div>
+        <div className="flex flex-col gap-1 lg:hidden">
+          <span className="bg-black w-5 h-1 rounded-sm"></span>
+          <span className="bg-black w-5 h-1 rounded-sm"></span>
+          <span className="bg-black w-5 h-1 rounded-sm"></span>
         </div>
       </div>
     </nav>

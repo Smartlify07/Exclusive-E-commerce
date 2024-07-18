@@ -9,7 +9,7 @@ const FlashSalesProductsList = () => {
   const ProductCard = lazy(() => import("../../../components/ProductCard"));
   return (
     <div
-      className={`transition-all w-full flex gap-[30px] transform`}
+      className={`transition-all overflow-hidden w-full grid grid-auto-fit  gap-[30px] transform lg:justify-items-center`}
       // style={{ transform: `translateX(-${currentSlide * 10}%)` }}
     >
       {flashSales.map((product) => (

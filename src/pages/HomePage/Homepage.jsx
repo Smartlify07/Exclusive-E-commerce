@@ -19,8 +19,8 @@ const Homepage = () => {
   return (
     <main className="py-7 font-poppins flex flex-col items-center">
       <Suspense fallback={<HomePageSkeleton />}>
-        <div className="md:w-10/12">
-          <div className="flex justify-between">
+        <div className="  w-full md:w-11/12 lg:w-10/12">
+          <div className="flex py-0 gap-6 flex-col md:w-full  lg:py-0 lg:justify-between lg:flex-row">
             <CategoriesLinks />
             <PromoCarousel />
           </div>

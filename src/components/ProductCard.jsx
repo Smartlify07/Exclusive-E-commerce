@@ -28,13 +28,13 @@ const ProductCard = ({
       onMouseOut={removeHoverEffect}
       onMouseOver={addHoverEffect}
     >
-      <div className="bg-[#f5f5f5] overflow-hidden w-full relative rounded-md flex flex-col p-3 ">
+      <div className="bg-[#f5f5f5] overflow-hidden w-full relative py-6 px-3 rounded-md flex flex-col lg:p-3 ">
         <div className="w-full relative  flex justify-between items-start">
           {showDiscountBadge && <DiscountBadge discount={discountPercentage} />}
           <ProductActions />
         </div>
 
-        <div className=" relative -top-2 self-center flex justify-center items-center lg:w-[190px] lg:h-[180px]">
+        <div className=" relative self-center flex justify-center items-center lg:-top-2 lg:w-[190px] lg:h-[180px]">
           <img
             src={image}
             className="lg:w-[170px] lg:h-[129px] object-contain"

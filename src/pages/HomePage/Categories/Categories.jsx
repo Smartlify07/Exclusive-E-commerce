@@ -27,7 +27,7 @@ const Categories = () => {
   ];
 
   const renderedCategoryIcons = (
-    <div className="flex items-center justify-between mt-16 gap-[30px]">
+    <div className="grid grid-auto-fit-lg  items-center justify-between mt-16 gap-[30px] lg:gap-0 lg:justify-items-center lg:grid-auto-fit-xs ">
       {categories.map((category, index) => (
         <CategoryIcon name={category.name} imgSrc={category.icon} key={index} />
       ))}
@@ -35,20 +35,22 @@ const Categories = () => {
   );
 
   return (
-    <section className="py-10">
-      <header className="flex items-center gap-4">
-        <Ribbon />
-        <h1 className="text-red font-semibold text-base">Categories</h1>
-      </header>
+    <section className="py-10 flex flex-col items-center">
+      <div className="w-10/12 lg:w-full">
+        <header className="flex items-center gap-4">
+          <Ribbon />
+          <h1 className="text-red font-semibold text-base">Categories</h1>
+        </header>
 
-      <div className="flex items-center justify-between lg:mt-5">
-        <h1 className="text-black font-semibold capitalize text-4xl">
-          Browse by category
-        </h1>
+        <div className="flex items-center justify-between mt-5">
+          <h1 className="text-black font-semibold capitalize text-4xl">
+            Browse by category
+          </h1>
 
-        <SliderControls />
+          <SliderControls />
+        </div>
+        {renderedCategoryIcons}
       </div>
-      {renderedCategoryIcons}
     </section>
   );
 };

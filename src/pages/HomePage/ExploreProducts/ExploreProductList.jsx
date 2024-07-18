@@ -17,7 +17,7 @@ const ExploreProductList = () => {
 
   return (
     <div
-      className={`transition-all w-full grid justify-items-center  grid-auto-fit gap-[30px] transform`}
+      className={`transition-all w-full grid   grid-auto-fit gap-[30px] transform lg:grid-auto-fit-lg lg:justify-items-center`}
     >
       {renderedProducts}
     </div>

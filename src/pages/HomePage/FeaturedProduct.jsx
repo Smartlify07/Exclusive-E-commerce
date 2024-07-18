@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 
 const FeaturedProduct = () => {
   return (
-    <div className="flex item-center justify-between">
-      <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-4 item-center justify-between lg:gap-0 lg:flex-row">
+      <div className="flex flex-col items-center order-2 gap-3 lg:items-stretch lg:order-1">
         <div className="flex items-center gap-4">
           <img src="/images/icons/applegrayicon.svg" alt="appleicon" />
           <p className="iPhone 14 Series text-text1 font-normal text-base">
@@ -18,10 +18,10 @@ const FeaturedProduct = () => {
         </Link>
       </div>
 
-      <div className="md:w-8/12">
+      <div className="flex justify-center md:w-8/12 self-center order-1 lg:order-2">
         <img
           src="/images/iphone.png"
-          className="md:w-full object-cover"
+          className="w-10/12  self-center md:w-full object-cover"
           alt=""
         />
       </div>

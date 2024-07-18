@@ -3,7 +3,7 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 const SliderControls = ({ leftSlide, rightSlide }) => {
   return (
-    <div className="flex items-center gap-2 justify-self-end ">
+    <div className="hidden  items-center gap-2 justify-self-end lg:flex">
       <button className="bg-gray-300 flex items-center justify-center rounded-full w-10 h-10">
         <FaArrowLeft onClick={() => leftSlide()} />
       </button>

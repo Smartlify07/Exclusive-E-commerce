@@ -37,7 +37,7 @@ const ProductAdvert = () => {
       </div>
 
       <div className="w-6/12 relative">
-        <div className="absolute -top-4  right-[10%] h-[250px]  rounded-full  w-[300px] bg-[#d9d9d9] blur-lg bg-opacity-10"></div>
+        <div className="absolute   hidden  bg-[#d9d9d9] blur-lg bg-opacity-10 lg:block lg:right-[0%] rounded-full lg:-top-24  lg:h-[300px]  lg:w-[300px]"></div>
         <img src="/images/JBL_BOOMBOX.png" alt="boombox" />
       </div>
     </div>

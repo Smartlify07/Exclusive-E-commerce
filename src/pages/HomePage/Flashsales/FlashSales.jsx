@@ -30,15 +30,15 @@ const FlashSales = () => {
   };
   return (
     <section className="flex flex-col py-20 items-center">
-      <div className="md:w-full  flex flex-col gap-5">
+      <div className="w-10/12 md:w-full  flex flex-col gap-5">
         <header className="flex items-center gap-1">
           <Ribbon />
           <h3 className="text-red font-semibold text-base">Today&apos;s</h3>
         </header>
 
-        <div className="flex items-center justify-between md:w-full">
-          <div className="flex items-center justify-between w-7/12">
-            <h3 className="text-black  font-semibold md:text-[36px]">
+        <div className="flex  flex-col  justify-between md:w-full lg:items-center lg:flex-row">
+          <div className="flex flex-col  justify-between lg:w-7/12 lg:items-center lg:flex-row">
+            <h3 className="text-black text-[36px]  font-semibold">
               Flash Sales
             </h3>
             <FlashSalesTimer />

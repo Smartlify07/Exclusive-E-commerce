@@ -22,8 +22,8 @@ const ServiceHighlights = () => {
     <ServiceFeature {...item} key={item.name} />
   ));
   return (
-    <section className="py-20">
-      <div className="grid grid-auto-fit  justify-center items-center lg:gap-[40px] lg:grid-auto-fit">
+    <section className="py-10 lg:py-20">
+      <div className="grid grid-auto-fit gap-[30px]  justify-center items-center lg:gap-[40px] lg:grid-auto-fit">
         {renderedServices}
       </div>
     </section>
