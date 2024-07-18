@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const ProductAdvert = () => {
   return (
-    <div className="w-full bg-black flex items-center py-16 px-10">
+    <div className="w-full bg-black flex flex-col items-center py-16 px-10 lg:flex-row">
       <div className="flex  flex-col gap-3">
         <h3 className="text-[#00FF66] font-semibold text-sm">Categories</h3>
         <h1 className="text-white font-semibold text-5xl w-9/12">
@@ -36,7 +36,7 @@ const ProductAdvert = () => {
         </Link>
       </div>
 
-      <div className="w-6/12 relative">
+      <div className="lg:w-6/12 mt-7 lg:mt-0 relative">
         <div className="absolute   hidden  bg-[#d9d9d9] blur-lg bg-opacity-10 lg:block lg:right-[0%] rounded-full lg:-top-24  lg:h-[300px]  lg:w-[300px]"></div>
         <img src="/images/JBL_BOOMBOX.png" alt="boombox" />
       </div>
