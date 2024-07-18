@@ -33,7 +33,9 @@ const SignUpForm = () => {
           };
 
           if (user) {
-            navigate("/");
+            setTimeout(() => {
+              navigate("/");
+            }, 2000);
           }
 
           handleSignUp();
