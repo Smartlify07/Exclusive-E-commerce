@@ -18,7 +18,9 @@ const Homepage = () => {
     import("./ExploreProducts/ExploreProducts")
   );
   const user = useSelector(selectUser);
-  console.log(user.displayName);
+  if (user) {
+    console.log(user.displayName);
+  }
 
   return (
     <main role="main" className="py-7 font-poppins flex flex-col items-center">
