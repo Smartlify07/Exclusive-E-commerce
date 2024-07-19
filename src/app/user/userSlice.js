@@ -14,8 +14,6 @@ const initialState = {
   userStatus: "idle",
 };
 
-console.log(initialState.user);
-
 export const getCurrentUser = createAsyncThunk("user/getuser", async () => {
   return new Promise((resolve, reject) => {
     const unsubscribe = onAuthStateChanged(
@@ -23,7 +21,13 @@ export const getCurrentUser = createAsyncThunk("user/getuser", async () => {
       (user) => {
         if (user) {
           unsubscribe();
-          resolve(user);
+          const userDetails = {
+            name: user.displayName,
+            phoneNumber: user.phoneNumber,
+            profilePic: user.photoURL,
+            email: user.email,
+          };
+          resolve(userDetails);
         } else {
           return null;
         }
@@ -49,8 +53,13 @@ export const signUp = createAsyncThunk(
         displayName: name,
       });
       console.log(userCredientials, userProfile);
-
-      return userCredientials.user;
+      const userDetails = {
+        name: userCredientials.user.displayName,
+        phoneNumber: userCredientials.phoneNumber,
+        profilePic: userCredientials.photoURL,
+        email: userCredientials.email,
+      };
+      return userDetails;
     } catch (error) {
       console.error(error);
       console.log(email, typeof password);
@@ -67,7 +76,13 @@ export const signIn = createAsyncThunk(
         email,
         password
       );
-      return userCredientials.user;
+      const userDetails = {
+        name: userCredientials.user.displayName,
+        phoneNumber: userCredientials.phoneNumber,
+        profilePic: userCredientials.photoURL,
+        email: userCredientials.email,
+      };
+      return userDetails;
     } catch (error) {
       console.error(error);
     }

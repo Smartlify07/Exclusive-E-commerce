@@ -2,11 +2,17 @@ import {
   createAsyncThunk,
   createEntityAdapter,
   createSlice,
-  nanoid,
 } from "@reduxjs/toolkit";
 
 import { db } from "../../../firebaseconfig";
-import { collection, getDocs, addDoc, getDoc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  getDoc,
+  setDoc,
+  doc,
+  deleteDoc,
+} from "firebase/firestore";
 const wishListProductsAdapter = createEntityAdapter();
 
 const initialState = wishListProductsAdapter.getInitialState({
@@ -29,15 +35,20 @@ export const fetchWishlistProducts = createAsyncThunk(
 
 export const addToWishList = createAsyncThunk(
   "wishlist/add",
-  async ({ ...data }) => {
-    const docRef = await addDoc(collection(db, "wishlist"), {
-      id: nanoid(),
+  async ({ id, ...data }) => {
+    const docRef = doc(db, "wishlist", id);
+    await setDoc(docRef, {
       ...data,
     });
+    console.log(data, id);
 
     const docSnap = await getDoc(docRef);
+
     if (docSnap.exists()) {
       console.log(docSnap.data());
+      console.log(docRef.id);
+      console.log("Added to wishlist");
+
       return {
         id: docRef.id,
         ...docSnap.data(),
@@ -45,6 +56,15 @@ export const addToWishList = createAsyncThunk(
     } else {
       console.error("No such document");
     }
+  }
+);
+
+export const removeFromWishList = createAsyncThunk(
+  "wishlist/delete",
+  async (id) => {
+    await deleteDoc(doc(db, "wishlist", id));
+    console.log(id);
+    return id;
   }
 );
 
@@ -68,15 +88,28 @@ const wishlistSlice = createSlice({
       })
       .addCase(fetchWishlistProducts.rejected, (state, action) => {
         state.productsStatus = "rejected";
-        console.log(action.error.message);
         state.productsError = action.error.message;
+        console.error(action.error.message, action.error.code);
       })
       .addCase(addToWishList.fulfilled, (state, action) => {
+        console.log(action.payload);
         wishListProductsAdapter.upsertOne(state, action.payload);
       })
       .addCase(addToWishList.rejected, (state, action) => {
         state.wishListStatus = "rejected";
         state.wishlistError = action.error.message;
+        console.error(action.error.message, action.error.code);
+      })
+      .addCase(removeFromWishList.fulfilled, (state, action) => {
+        state.wishListStatus = "fulfilled";
+        console.log(action.payload);
+
+        wishListProductsAdapter.removeOne(state, action.payload);
+      })
+      .addCase(removeFromWishList.rejected, (state, action) => {
+        state.wishListStatus = "rejected";
+        state.wishlistError = action.error.message;
+        console.error(action.error.code);
       });
   },
 });

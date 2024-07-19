@@ -28,7 +28,10 @@ const ProductCard = (props) => {
           {props.showDiscountBadge && (
             <DiscountBadge discount={discountPercentage} />
           )}
-          <ProductActions {...props} />
+          <ProductActions
+            showDeleteButton={props.showDeleteButton}
+            {...props}
+          />
         </div>
 
         <div className=" relative self-center flex justify-center items-center lg:-top-2 lg:w-[190px] lg:h-[180px]">

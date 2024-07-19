@@ -24,6 +24,7 @@ const withProductList = (WrappedComponent) => {
           <Suspense key={product.id} fallback={<ProductCardSkeleton />}>
             <ProductCard
               showDiscountBadge={props.showDiscountBadge}
+              showDeleteButton={props.showDeleteButton}
               {...product}
             />
           </Suspense>
