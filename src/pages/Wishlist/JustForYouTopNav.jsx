@@ -10,7 +10,7 @@ const JustForYouTopNav = () => {
         </h3>
       </div>
 
-      <button className="py-3 px-6 border border-black border-opacity-50 rounded-[4px] font-medium">
+      <button className="py-3 px-6 border border-black border-opacity-50 rounded-[4px] font-medium lg:px-12">
         See All
       </button>
     </nav>

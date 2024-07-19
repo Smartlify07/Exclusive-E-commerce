@@ -6,6 +6,9 @@ import { Navigate } from "react-router";
 const SignUp = () => {
   const user = useSelector(selectUser);
 
+  if (user) {
+    return <Navigate to={"/"} />;
+  }
   return (
     <main
       role="signup"
