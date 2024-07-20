@@ -1,10 +1,10 @@
 import { useSelector } from "react-redux";
 import JustForYou from "./JustForYou";
 import WishListTopNav from "./WishListTopNav";
-import { selectAllWishListProducts } from "../../app/wishlist/wishlistSlice";
 import withProductList from "../../HOCs/withProductList";
 import useWishListProducts from "../../hooks/useWishListProducts";
 import WishListProducts from "./WishListProducts";
+import { selectAllWishListProducts } from "../../app/user/userWishlistSlice";
 const Wishlist = () => {
   const products = useSelector(selectAllWishListProducts);
   const ProductList = withProductList(WishListProducts);

@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
 import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router";
-import { selectUser } from "../../app/user/userSlice";
+import { selectAuth } from "../../app/auth/authSlice";
 
 const ProtectedAuthRoute = ({ children }) => {
   const location = useLocation();
-  const user = useSelector(selectUser);
+  const user = useSelector(selectAuth);
   if (user) {
     return children;
   } else {

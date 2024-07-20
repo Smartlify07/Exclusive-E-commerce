@@ -4,6 +4,8 @@ import {
   createSlice,
 } from "@reduxjs/toolkit";
 
+//Todo: Update firestore to add new users and user data, then let each user have their own database.
+
 import { db } from "../../../firebaseconfig";
 import {
   collection,
@@ -13,17 +15,19 @@ import {
   doc,
   deleteDoc,
 } from "firebase/firestore";
-const wishListProductsAdapter = createEntityAdapter();
+const userWishListProductsAdapter = createEntityAdapter();
 
-const initialState = wishListProductsAdapter.getInitialState({
+const initialState = userWishListProductsAdapter.getInitialState({
   wishlistError: null,
-  wishListStatus: "idle",
+  wishlistStatus: "idle",
 });
 
 export const fetchWishlistProducts = createAsyncThunk(
   "wishlist/fetch",
-  async () => {
-    const querySnapshot = await getDocs(collection(db, "wishlist"));
+  async ({ userId }) => {
+    const querySnapshot = await getDocs(
+      collection(db, "users", userId, "wishlist")
+    );
 
     const products = querySnapshot.docs.map((product) => ({
       id: product.id,
@@ -35,12 +39,12 @@ export const fetchWishlistProducts = createAsyncThunk(
 
 export const addToWishList = createAsyncThunk(
   "wishlist/add",
-  async ({ id, ...data }) => {
-    const docRef = doc(db, "wishlist", id);
+  async ({ userId, id, ...data }) => {
+    const docRef = doc(db, "users", userId, "wishlist", id);
     await setDoc(docRef, {
       ...data,
     });
-    console.log(data, id);
+    console.log(userId, data, id);
 
     const docSnap = await getDoc(docRef);
 
@@ -61,9 +65,9 @@ export const addToWishList = createAsyncThunk(
 
 export const removeFromWishList = createAsyncThunk(
   "wishlist/delete",
-  async (id) => {
-    await deleteDoc(doc(db, "wishlist", id));
-    console.log(id);
+  async ({ userId, id }) => {
+    await deleteDoc(doc(db, "users", userId, "wishlist", id));
+    console.log(userId, id);
     return id;
   }
 );
@@ -74,42 +78,42 @@ const wishlistSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(fetchWishlistProducts.pending, (state) => {
-        state.wishListStatus = "pending";
+        state.wishlistStatus = "pending";
       })
       .addCase(fetchWishlistProducts.fulfilled, (state, action) => {
-        state.productsStatus = "successful";
+        state.wishlistStatus = "successful";
         const products = action.payload.map((product) => ({
           ...product,
           saleStart: product?.saleStart?.seconds, // Create a serializable property
           saleEnd: product?.saleEnd?.seconds,
         }));
 
-        wishListProductsAdapter.upsertMany(state, products);
+        userWishListProductsAdapter.upsertMany(state, products);
       })
       .addCase(fetchWishlistProducts.rejected, (state, action) => {
-        state.productsStatus = "rejected";
-        state.productsError = action.error.message;
-        console.error(action.error.message, action.error.code);
+        state.wishlistStatus = "rejected";
+        state.wishlistError = action.error.message;
+        console.error(action.error.message);
       })
       .addCase(addToWishList.fulfilled, (state, action) => {
         console.log(action.payload);
-        wishListProductsAdapter.upsertOne(state, action.payload);
+        userWishListProductsAdapter.upsertOne(state, action.payload);
       })
       .addCase(addToWishList.rejected, (state, action) => {
-        state.wishListStatus = "rejected";
+        state.wishlistStatus = "rejected";
         state.wishlistError = action.error.message;
         console.error(action.error.message, action.error.code);
       })
       .addCase(removeFromWishList.fulfilled, (state, action) => {
-        state.wishListStatus = "fulfilled";
+        state.wishlistStatus = "fulfilled";
         console.log(action.payload);
 
-        wishListProductsAdapter.removeOne(state, action.payload);
+        userWishListProductsAdapter.removeOne(state, action.payload);
       })
       .addCase(removeFromWishList.rejected, (state, action) => {
-        state.wishListStatus = "rejected";
+        state.wishlistStatus = "rejected";
         state.wishlistError = action.error.message;
-        console.error(action.error.code);
+        console.error(action.error.message);
       });
   },
 });
@@ -117,8 +121,9 @@ const wishlistSlice = createSlice({
 export const {
   selectAll: selectAllWishListProducts,
   selectById: selectWishListProductById,
-} = wishListProductsAdapter.getSelectors((state) => state.wishlist);
+} = userWishListProductsAdapter.getSelectors((state) => state.wishlist);
 
-export const wishListStatus = (state) => state.wishlist.wishListStatus;
+export const wishListStatus = (state) => state.wishlist.wishlistStatus;
+export const wishlistError = (state) => state.wishlist.wishlistError;
 
 export default wishlistSlice.reducer;

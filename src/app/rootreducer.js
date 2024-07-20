@@ -1,9 +1,11 @@
 import { combineReducers } from "@reduxjs/toolkit";
 import productsReducer from "./products/productsSlice";
+import authReducer from "./auth/authSlice";
 import userReducer from "./user/userSlice";
-import wishlistReducer from "./wishlist/wishlistSlice";
+import userWishListReducer from "./user/userWishlistSlice";
 export const rootReducer = combineReducers({
   products: productsReducer,
+  auth: authReducer,
   user: userReducer,
-  wishlist: wishlistReducer,
+  wishlist: userWishListReducer,
 });

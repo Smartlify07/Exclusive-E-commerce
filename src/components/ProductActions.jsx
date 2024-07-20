@@ -1,17 +1,22 @@
 /* eslint-disable react/prop-types */
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addToWishList,
-  removeFromWishList,
-  selectWishListProductById,
-} from "../app/wishlist/wishlistSlice";
 import { BiTrash } from "react-icons/bi";
 import { FaHeart, FaRegEye, FaRegHeart } from "react-icons/fa";
-import { useEffect } from "react";
 import useWishListProducts from "../hooks/useWishListProducts";
+import {
+  addToWishList,
+  selectWishListProductById,
+  removeFromWishList,
+} from "../app/user/userWishlistSlice";
+import { selectAuth } from "../app/auth/authSlice";
 
 const ProductActions = (props) => {
-  useWishListProducts();
+  const user = useSelector(selectAuth);
+  let userId;
+  if (user) {
+    userId = user.userId;
+  }
+  useWishListProducts(); // get wishlist products on refresh
   const dispatch = useDispatch();
   const {
     saleStart,
@@ -29,8 +34,10 @@ const ProductActions = (props) => {
   } = props;
   const handleAddToWishlist = () => {
     console.log(props);
+
     dispatch(
       addToWishList({
+        userId,
         id,
         saleStart,
         saleEnd,
@@ -48,7 +55,7 @@ const ProductActions = (props) => {
   };
 
   const handleRemoveFromWishList = () => {
-    dispatch(removeFromWishList(id));
+    dispatch(removeFromWishList({ userId, id }));
   };
 
   const wishListProductId = useSelector((state) =>
@@ -70,7 +77,7 @@ const ProductActions = (props) => {
           className="bg-white rounded-full flex items-center justify-center w-7 h-7"
         >
           {!wishListProductId && <FaRegHeart className="text-lg" />}
-          {wishListProductId && <FaHeart className="fill-red" />}
+          {wishListProductId && <FaHeart className="fill-red text-lg" />}
         </button>
       )}
       {!props.showDeleteButton && (

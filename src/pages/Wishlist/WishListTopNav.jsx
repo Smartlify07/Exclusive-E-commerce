@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { selectAllWishListProducts } from "../../app/wishlist/wishlistSlice";
+import { selectAllWishListProducts } from "../../app/user/userWishlistSlice";
 
 const WishListTopNav = () => {
   const products = useSelector(selectAllWishListProducts);

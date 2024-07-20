@@ -1,141 +1,53 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import {
-  createUserWithEmailAndPassword,
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-  updateProfile,
-} from "firebase/auth";
-import { auth } from "../../../firebaseconfig";
+import { db } from "../../../firebaseconfig";
+import { doc, setDoc } from "firebase/firestore";
 
 const initialState = {
   user: null,
-  isAuthenticated: false,
-  userError: null,
+  userId: null,
   userStatus: "idle",
+  userError: null,
 };
 
-export const getCurrentUser = createAsyncThunk("user/getuser", async () => {
-  return new Promise((resolve, reject) => {
-    const unsubscribe = onAuthStateChanged(
-      auth,
-      (user) => {
-        if (user) {
-          unsubscribe();
-          const userDetails = {
-            name: user.displayName,
-            phoneNumber: user.phoneNumber,
-            profilePic: user.photoURL,
-            email: user.email,
-          };
-          resolve(userDetails);
-        } else {
-          return null;
-        }
-      },
-      (error) => {
-        reject(error);
-      }
-    );
+export const addUser = createAsyncThunk("user/addUser", async ({ user }) => {
+  console.log(user);
+  const docRef = doc(db, "users", user.userId);
+  console.log(docRef);
+  console.log(user);
+  await setDoc(docRef, {
+    ...user,
   });
+
+  return user;
 });
 
-export const signUp = createAsyncThunk(
-  "user/signup",
-  async ({ email, password, name }) => {
-    try {
-      const userCredientials = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-
-      const userProfile = await updateProfile(auth.currentUser, {
-        displayName: name,
-      });
-      console.log(userCredientials, userProfile);
-      const userDetails = {
-        name: userCredientials.user.displayName,
-        phoneNumber: userCredientials.phoneNumber,
-        profilePic: userCredientials.photoURL,
-        email: userCredientials.email,
-      };
-      return userDetails;
-    } catch (error) {
-      console.error(error);
-      console.log(email, typeof password);
-    }
-  }
-);
-
-export const signIn = createAsyncThunk(
-  "user/signin",
-  async ({ email, password }) => {
-    try {
-      const userCredientials = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      const userDetails = {
-        name: userCredientials.user.displayName,
-        phoneNumber: userCredientials.phoneNumber,
-        profilePic: userCredientials.photoURL,
-        email: userCredientials.email,
-      };
-      return userDetails;
-    } catch (error) {
-      console.error(error);
-    }
-  }
-);
-
-export const userSlice = createSlice({
+const userSlice = createSlice({
   initialState,
   name: "user",
 
+  reducers: {
+    //     getUserId: (state) => {},
+  },
   extraReducers(builder) {
     builder
-      .addCase(getCurrentUser.pending, (state) => {
+      .addCase(addUser.pending, (state) => {
         state.userStatus = "pending";
       })
-      .addCase(getCurrentUser.fulfilled, (state, action) => {
-        state.userStatus = "successful";
-        state.isAuthenticated = true;
+      .addCase(addUser.fulfilled, (state, action) => {
+        state.userStatus = "fulfilled";
         state.user = action.payload;
         console.log(action.payload);
+        console.log(state.user);
+        state.userId = action.payload.id;
       })
-      .addCase(getCurrentUser.rejected, (state, action) => {
+      .addCase(addUser.rejected, (state, action) => {
         state.userStatus = "rejected";
         state.userError = action.error.message;
-      })
-      .addCase(signUp.pending, (state) => {
-        state.userStatus = "pending";
-      })
-      .addCase(signUp.fulfilled, (state, action) => {
-        state.userStatus = "successful";
-        state.isAuthenticated = true;
-        state.user = action.payload;
-      })
-      .addCase(signUp.rejected, (state, action) => {
-        state.userStatus = "rejected";
-        state.userError = action.error.message;
-      })
-      .addCase(signIn.pending, (state) => {
-        state.userStatus = "pending";
-      })
-      .addCase(signIn.fulfilled, (state, action) => {
-        state.userStatus = "successful";
-        state.isAuthenticated = true;
-        state.user = action.payload;
-      })
-      .addCase(signIn.rejected, (state, action) => {
-        state.userStatus = "rejected";
-        state.userError = action.error.message;
+        console.error(action.error.message);
       });
   },
 });
 
 export const selectUser = (state) => state.user.user;
-export const selectUserStatus = (state) => state.user.userStatus;
-export const selectUserError = (state) => state.user.userError;
+export const { getUserId } = userSlice.actions;
 export default userSlice.reducer;

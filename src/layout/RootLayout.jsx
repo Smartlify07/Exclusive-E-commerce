@@ -5,7 +5,7 @@ import PromoBanner from "../components/PromoBanner";
 import { withAuthNavbar } from "../HOCs/withAuth";
 import { lazy, Suspense, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCurrentUser, selectUserStatus } from "../app/user/userSlice";
+import { getCurrentUser, selectAuthStatus } from "../app/auth/authSlice";
 
 const RootLayout = () => {
   const Navbar = withAuthNavbar(AuthenticatedNavbar, NonAuthenticatedNavbar);
@@ -13,7 +13,7 @@ const RootLayout = () => {
   const Footer = lazy(() => import("../components/Footer/Footer"));
 
   const dispatch = useDispatch();
-  const userStatus = useSelector(selectUserStatus);
+  const userStatus = useSelector(selectAuthStatus);
 
   useEffect(() => {
     if (userStatus === "idle") {
