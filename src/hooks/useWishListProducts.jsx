@@ -12,7 +12,7 @@ const useWishListProducts = () => {
   const user = useSelector(selectAuth);
   const { userId } = user;
   useEffect(() => {
-    if (status === "idle") {
+    if (status === "idle" && userId) {
       dispatch(fetchWishlistProducts({ userId }));
     }
   }, [dispatch, status, userId]);

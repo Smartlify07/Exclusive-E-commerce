@@ -25,40 +25,45 @@ const initialState = userWishListProductsAdapter.getInitialState({
 export const fetchWishlistProducts = createAsyncThunk(
   "wishlist/fetch",
   async ({ userId }) => {
-    const querySnapshot = await getDocs(
-      collection(db, "users", userId, "wishlist")
-    );
+    try {
+      const querySnapshot = await getDocs(
+        collection(db, "users", userId, "wishlist")
+      );
 
-    const products = querySnapshot.docs.map((product) => ({
-      id: product.id,
-      ...product.data(),
-    }));
-    return products;
+      const products = querySnapshot.docs.map((product) => ({
+        id: product.id,
+        ...product.data(),
+      }));
+      return products;
+    } catch (error) {
+      console.error(error);
+    }
   }
 );
 
 export const addToWishList = createAsyncThunk(
   "wishlist/add",
   async ({ userId, id, ...data }) => {
-    const docRef = doc(db, "users", userId, "wishlist", id);
-    await setDoc(docRef, {
-      ...data,
-    });
-    console.log(userId, data, id);
+    try {
+      const docRef = doc(db, "users", userId, "wishlist", id);
+      await setDoc(docRef, {
+        ...data,
+      });
 
-    const docSnap = await getDoc(docRef);
+      const docSnap = await getDoc(docRef);
 
-    if (docSnap.exists()) {
-      console.log(docSnap.data());
-      console.log(docRef.id);
-      console.log("Added to wishlist");
+      if (docSnap.exists()) {
+        console.log("Added to wishlist");
 
-      return {
-        id: docRef.id,
-        ...docSnap.data(),
-      };
-    } else {
-      console.error("No such document");
+        return {
+          id: docRef.id,
+          ...docSnap.data(),
+        };
+      } else {
+        console.error("No such document");
+      }
+    } catch (error) {
+      console.error(error);
     }
   }
 );
@@ -66,9 +71,13 @@ export const addToWishList = createAsyncThunk(
 export const removeFromWishList = createAsyncThunk(
   "wishlist/delete",
   async ({ userId, id }) => {
-    await deleteDoc(doc(db, "users", userId, "wishlist", id));
-    console.log(userId, id);
-    return id;
+    try {
+      await deleteDoc(doc(db, "users", userId, "wishlist", id));
+      console.log(userId, id);
+      return id;
+    } catch (error) {
+      console.error(error);
+    }
   }
 );
 
@@ -93,10 +102,10 @@ const wishlistSlice = createSlice({
       .addCase(fetchWishlistProducts.rejected, (state, action) => {
         state.wishlistStatus = "rejected";
         state.wishlistError = action.error.message;
-        console.error(action.error.message);
+        console.error(action.error);
       })
       .addCase(addToWishList.fulfilled, (state, action) => {
-        console.log(action.payload);
+        state.wishlistStatus = "successful";
         userWishListProductsAdapter.upsertOne(state, action.payload);
       })
       .addCase(addToWishList.rejected, (state, action) => {
@@ -106,7 +115,6 @@ const wishlistSlice = createSlice({
       })
       .addCase(removeFromWishList.fulfilled, (state, action) => {
         state.wishlistStatus = "fulfilled";
-        console.log(action.payload);
 
         userWishListProductsAdapter.removeOne(state, action.payload);
       })

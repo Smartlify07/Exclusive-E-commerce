@@ -33,8 +33,6 @@ const ProductActions = (props) => {
     stars,
   } = props;
   const handleAddToWishlist = () => {
-    console.log(props);
-
     dispatch(
       addToWishList({
         userId,
@@ -58,17 +56,21 @@ const ProductActions = (props) => {
     dispatch(removeFromWishList({ userId, id }));
   };
 
-  const wishListProductId = useSelector((state) =>
+  const wishListProduct = useSelector((state) =>
     selectWishListProductById(state, id)
   );
+
+  let wishListProductId;
+  if (wishListProduct) {
+    wishListProductId = wishListProduct.id;
+  }
 
   return (
     <div className="flex flex-col gap-2 absolute right-0 justify-self-end">
       {!props.showDeleteButton && (
         <button
           onClick={() => {
-            if (wishListProductId) {
-              console.log("Removed from wishlist");
+            if (wishListProduct) {
               handleRemoveFromWishList();
             } else {
               handleAddToWishlist();

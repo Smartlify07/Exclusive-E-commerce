@@ -3,13 +3,9 @@ import { NavLink } from "react-router-dom";
 import Logo from "../Logo";
 import SearchBar from "../SearchBar";
 import ActionIcons from "../ActionIcons";
-import { selectAuth } from "../../app/auth/authSlice";
-import { useSelector } from "react-redux";
 
 const DesktopNavbar = ({ children }) => {
   const activeNavClass = `border-b border-b-black py-1`;
-  const user = useSelector(selectAuth);
-  console.log(user);
 
   return (
     <nav className="hidden lg:flex flex-col items-center pt-10 pb-5 font-poppins border-b border-[#E3E3E3] md:items-center">

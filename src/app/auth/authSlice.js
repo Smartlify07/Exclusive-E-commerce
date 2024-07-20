@@ -57,10 +57,9 @@ export const signUp = createAsyncThunk(
         password
       );
 
-      const userProfile = await updateProfile(auth.currentUser, {
+      await updateProfile(auth.currentUser, {
         displayName: name,
       });
-      console.log(userCredientials, userProfile);
       const userDetails = {
         name: userCredientials.user.displayName,
         phoneNumber: userCredientials.user.phoneNumber,
@@ -115,7 +114,6 @@ export const authSlice = createSlice({
         state.authStatus = "successful";
         state.isAuthenticated = true;
         state.user = action.payload;
-        console.log(action.payload);
       })
       .addCase(getCurrentUser.rejected, (state, action) => {
         state.authStatus = "rejected";
@@ -132,6 +130,7 @@ export const authSlice = createSlice({
       .addCase(signUp.rejected, (state, action) => {
         state.authStatus = "rejected";
         state.authError = action.error.message;
+        console.log(action.error.message);
       })
       .addCase(signIn.pending, (state) => {
         state.authStatus = "pending";
@@ -153,6 +152,7 @@ export const authSlice = createSlice({
       .addCase(logOut.rejected, (state, action) => {
         state.authStatus = "rejected";
         state.authError = action.error.message;
+        console.log(action.error.message);
       });
   },
 });
