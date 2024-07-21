@@ -1,8 +1,7 @@
 import { lazy, Suspense } from "react";
 import HomePageSkeleton from "./HomePageSkeleton";
 import ServiceHighlights from "./ServiceHighlights/ServiceHighlights";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../app/user/userSlice";
+import { ToastContainer } from "react-toastify";
 
 const Homepage = () => {
   const CategoriesLinks = lazy(() => import("./CategoriesLinks"));
@@ -17,15 +16,12 @@ const Homepage = () => {
   const ExploreProducts = lazy(() =>
     import("./ExploreProducts/ExploreProducts")
   );
-  const user = useSelector(selectUser);
-  if (user) {
-    console.log(user.displayName);
-  }
 
   return (
     <main role="main" className="py-7 font-poppins flex flex-col items-center">
       <Suspense fallback={<HomePageSkeleton />}>
         <div className="  w-full md:w-11/12 lg:w-10/12">
+          <ToastContainer autoClose={2000} />
           <div className="flex py-0 gap-6 flex-col md:w-full  lg:py-0 lg:justify-between lg:flex-row">
             <CategoriesLinks />
             <PromoCarousel />

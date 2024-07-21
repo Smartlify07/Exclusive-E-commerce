@@ -57,7 +57,7 @@ const FlashSales = () => {
             <div className="bg-gray-100 w-full h-[300px] rounded-sm"></div>
           }
         >
-          <ProductList type="flashsales" />
+          <ProductList products={flashSaleProducts} showDiscountBadge />
         </Suspense>
 
         <Link

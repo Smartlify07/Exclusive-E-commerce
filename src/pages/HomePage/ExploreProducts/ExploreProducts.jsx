@@ -3,10 +3,13 @@ import Ribbon from "../../../components/Ribbon";
 import SliderControls from "../../../components/SliderControls";
 import withProductList from "../../../HOCs/withProductList";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectAllProducts } from "../../../app/products/productsSlice";
 
 const ExploreProducts = () => {
   const ExploreProductsList = lazy(() => import("./ExploreProductList"));
   const ProductsList = withProductList(ExploreProductsList);
+  const products = useSelector(selectAllProducts);
   return (
     <section className="py-20 flex flex-col items-center">
       <div className="flex flex-col w-10/12 lg:w-full">
@@ -28,7 +31,7 @@ const ExploreProducts = () => {
             <div className="bg-gray-100 w-full h-[300px] rounded-sm"></div>
           }
         >
-          <ProductsList type="flashsales" />
+          <ProductsList products={products.slice(0, 8)} showDiscountBadge />
         </Suspense>
 
         <Link className="text-white self-center font-semibold mt-7 bg-red rounded-sm px-12 py-4">

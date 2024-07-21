@@ -5,14 +5,7 @@ import DiscountBadge from "./DiscountBadge";
 import ProductActions from "./ProductActions";
 import { useState } from "react";
 
-const ProductCard = ({
-  name,
-  actualPrice,
-  image,
-  discountedPrice,
-  showDiscountBadge,
-  showActualPrice,
-}) => {
+const ProductCard = (props) => {
   const [isHovered, setIsHovered] = useState(false);
   const addHoverEffect = () => {
     setIsHovered(true);
@@ -21,6 +14,8 @@ const ProductCard = ({
     setIsHovered(false);
   };
 
+  const actualPrice = props.actualPrice;
+  const discountedPrice = props.discountedPrice;
   const discountPercentage = useDiscount({ actualPrice, discountedPrice });
   return (
     <div
@@ -30,13 +25,18 @@ const ProductCard = ({
     >
       <div className="bg-[#f5f5f5] overflow-hidden w-full relative py-6 px-3 rounded-md flex flex-col lg:p-3 ">
         <div className="w-full relative  flex justify-between items-start">
-          {showDiscountBadge && <DiscountBadge discount={discountPercentage} />}
-          <ProductActions />
+          {props.showDiscountBadge && (
+            <DiscountBadge discount={discountPercentage} />
+          )}
+          <ProductActions
+            showDeleteButton={props.showDeleteButton}
+            {...props}
+          />
         </div>
 
         <div className=" relative self-center flex justify-center items-center lg:-top-2 lg:w-[190px] lg:h-[180px]">
           <img
-            src={image}
+            src={props.image}
             className="lg:w-[170px] lg:h-[129px] object-contain"
             alt="productImg"
           />
@@ -50,7 +50,7 @@ const ProductCard = ({
           role="productName"
           className="text-black capitalize  font-medium text-base"
         >
-          {name}
+          {props.name}
         </h1>
 
         <div className="flex items-center gap-3">

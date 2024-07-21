@@ -1,15 +1,11 @@
 import { useSelector } from "react-redux";
 import SignUpForm from "./SignUpForm";
-import { selectUser, selectUserStatus } from "../../app/user/userSlice";
 import { Navigate } from "react-router";
+import { selectAuth } from "../../app/auth/authSlice";
 
 const SignUp = () => {
-  const userStatus = useSelector(selectUserStatus);
-  const user = useSelector(selectUser);
+  const user = useSelector(selectAuth);
 
-  if (user) {
-    console.log(userStatus, user.email, user.displayName);
-  }
   if (user) {
     return <Navigate to={"/"} />;
   }
