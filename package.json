@@ -19,7 +19,9 @@
     "react-redux": "^9.1.2",
     "react-router": "^6.24.1",
     "react-router-dom": "^6.24.1",
+    "react-toastify": "^10.0.5",
     "swiper": "^11.1.5",
+    "uid": "^2.0.2",
     "yup": "^1.4.0"
   },
   "devDependencies": {

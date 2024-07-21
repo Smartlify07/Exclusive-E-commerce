@@ -9,6 +9,7 @@ import { Provider } from "react-redux";
 import { store } from "./app/store";
 import { lazy, Suspense } from "react";
 import ProtectedAuthRoute from "./routes/protectedroutes/ProtectedAuthRoute";
+import "react-toastify/ReactToastify.min.css";
 import Wishlist from "./pages/Wishlist/Wishlist";
 function App() {
   const Homepage = lazy(() => import("./pages/HomePage/Homepage"));

@@ -11,6 +11,8 @@ import {
 import { selectAuth } from "../app/auth/authSlice";
 import { useState } from "react";
 import { selectAllProducts } from "../app/products/productsSlice";
+import { toast } from "react-toastify";
+import { uid } from "uid";
 
 const ProductActions = (props) => {
   const user = useSelector(selectAuth);
@@ -21,43 +23,33 @@ const ProductActions = (props) => {
   useWishListProducts(); // get wishlist products on refresh
   const dispatch = useDispatch();
   const [wishListed, setWishListed] = useState(false);
+
   const products = useSelector(selectAllProducts);
-  const {
-    saleStart,
-    saleEnd,
-    name,
-    discountedPrice,
-    actualPrice,
-    image,
-    revenue,
-    unitSold,
-    likes,
-    id,
-    views,
-    stars,
-  } = props;
-  const handleAddToWishlist = () => {
+  const { id } = props;
+  const handleAddToWishlist = async () => {
     dispatch(
-      addToWishList({
+      await addToWishList({
         userId,
-        id,
-        saleStart,
-        saleEnd,
-        name,
-        discountedPrice,
-        actualPrice,
-        image,
-        revenue,
-        unitSold,
-        likes,
-        views,
-        stars,
+        id: props.id,
+        saleStart: props.saleStart,
+        saleEnd: props.saleEnd,
+        name: props.name,
+        discountedPrice: props.discountedPrice,
+        actualPrice: props.actualPrice,
+        image: props.image,
+        revenue: props.revenue,
+        unitSold: props.unitSold,
+        likes: props.likes,
+        views: props.views,
+        stars: props.stars,
       })
-    );
+    ).unwrap();
+    await notify("Added to wishlist");
   };
 
-  const handleRemoveFromWishList = () => {
-    dispatch(removeFromWishList({ userId, id }));
+  const handleRemoveFromWishList = async () => {
+    await dispatch(removeFromWishList({ userId, id })).unwrap();
+    notify("Removed from wishlist");
   };
 
   const wishListProduct = useSelector((state) =>
@@ -78,10 +70,19 @@ const ProductActions = (props) => {
     }
   };
 
+  const notify = (message) => {
+    const toastId = uid(5);
+
+    toast.success(message, {
+      toastId,
+    });
+  };
+
   let heart = null;
   if (wishListed || wishListProductId) {
     heart = <FaHeart className="text-lg fill-red" />;
-  } else if (!wishListed || !wishListProductId) {
+  } else if (wishListed === false || !wishListProductId) {
+    console.log("Removed");
     heart = <FaRegHeart className="text-lg" />;
   }
 
