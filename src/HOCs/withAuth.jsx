@@ -9,6 +9,7 @@ export const withAuthNavbar = (AuthenticatedNavbar, NonAuthenticatedNavbar) => {
       console.log("no user");
       return <NonAuthenticatedNavbar />;
     } else {
+      console.log(user);
       return <AuthenticatedNavbar />;
     }
   };

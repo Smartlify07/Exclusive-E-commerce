@@ -13,6 +13,7 @@ import { useState } from "react";
 import { selectAllProducts } from "../app/products/productsSlice";
 import { toast } from "react-toastify";
 import { uid } from "uid";
+import { Link } from "react-router-dom";
 
 const ProductActions = (props) => {
   const user = useSelector(selectAuth);
@@ -104,9 +105,12 @@ const ProductActions = (props) => {
         </button>
       )}
       {!props.showDeleteButton && (
-        <button className="bg-white rounded-full flex items-center justify-center w-7 h-7">
+        <Link
+          to={`/products/${props.id}`}
+          className="bg-white rounded-full flex items-center justify-center w-7 h-7"
+        >
           <FaRegEye className="text-lg text-black" />
-        </button>
+        </Link>
       )}
       {props.showDeleteButton && (
         <button

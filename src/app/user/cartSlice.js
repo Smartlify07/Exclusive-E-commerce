@@ -47,6 +47,7 @@ export const addToCart = createAsyncThunk(
       await setDoc(docRef, {
         ...data,
       });
+      console.log(data, "Added to cart");
 
       const docSnap = await getDoc(docRef);
 

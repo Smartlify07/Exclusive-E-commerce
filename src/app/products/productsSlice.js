@@ -5,7 +5,7 @@ import {
 } from "@reduxjs/toolkit";
 
 import { db } from "../../../firebaseconfig";
-import { collection, getDocs, Timestamp } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 
 const productsAdapter = createEntityAdapter();
 const initialState = productsAdapter.getInitialState({
@@ -17,10 +17,13 @@ export const fetchProducts = createAsyncThunk(
   "products/fetchproducts",
   async () => {
     const querySnapshot = await getDocs(collection(db, "products"));
-    const products = querySnapshot.docs.map((product) => ({
-      id: product.id,
-      ...product.data(),
-    }));
+    const products = querySnapshot.docs.map((product) => {
+      return {
+        id: product.id,
+        ...product.data(),
+      };
+    });
+
     return products;
   }
 );
