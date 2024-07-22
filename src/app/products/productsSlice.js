@@ -17,10 +17,13 @@ export const fetchProducts = createAsyncThunk(
   "products/fetchproducts",
   async () => {
     const querySnapshot = await getDocs(collection(db, "products"));
-    const products = querySnapshot.docs.map((product) => ({
-      id: product.id,
-      ...product.data(),
-    }));
+    const products = querySnapshot.docs.map((product) => {
+      return {
+        id: product.id,
+        ...product.data(),
+      };
+    });
+
     return products;
   }
 );
@@ -38,8 +41,9 @@ const productsSlice = createSlice({
         state.productsStatus = "successful";
         const products = action.payload.map((product) => ({
           ...product,
-          saleStart: product?.saleStart?.seconds, // Create a serializable property
-          saleEnd: product?.saleEnd?.seconds,
+
+          saleStart: product?.saleStart?.toDate().getTime() / 1000, // Create a serializable property
+          saleEnd: product?.saleEnd?.toDate().getTime() / 1000,
         }));
 
         productsAdapter.upsertMany(state, products);

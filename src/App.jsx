@@ -10,41 +10,61 @@ import { store } from "./app/store";
 import { lazy, Suspense } from "react";
 import ProtectedAuthRoute from "./routes/protectedroutes/ProtectedAuthRoute";
 import "react-toastify/ReactToastify.min.css";
-import Wishlist from "./pages/Wishlist/Wishlist";
+import ProductDetails from "./pages/ProductDetails/ProductDetails";
 function App() {
   const Homepage = lazy(() => import("./pages/HomePage/Homepage"));
   const SignUp = lazy(() => import("./pages/SignUp/SignUp"));
   const Login = lazy(() => import("./pages/Login/Login"));
   const NotFound = lazy(() => import("./pages/ErrorPages/NotFound"));
+  const Cart = lazy(() => import("./pages/Cart/Cart"));
+  const Wishlist = lazy(() => import("./pages/Wishlist/Wishlist"));
 
   const router = createBrowserRouter(
     createRoutesFromElements(
       <>
         <Route element={<RootLayout />}>
           <Route element={<Homepage />} path="/" />
+
           <Route
-            path="/signup"
+            path="/wishlist"
             element={
-              <Suspense>
-                <SignUp />
+              <Suspense
+                fallback={
+                  <div className="bg-gray-100 min-h-screen w-full"></div>
+                }
+              >
+                <ProtectedAuthRoute>
+                  <Wishlist />
+                </ProtectedAuthRoute>
               </Suspense>
             }
           />
 
           <Route
-            path="/wishlist"
+            path="/cart"
             element={
               <ProtectedAuthRoute>
-                <Wishlist />
+                <Cart />
               </ProtectedAuthRoute>
             }
-          ></Route>
+          />
+
+          <Route path="/products/:id" element={<ProductDetails />} />
 
           <Route
             path="/login"
             element={
               <Suspense>
                 <Login />
+              </Suspense>
+            }
+          />
+
+          <Route
+            path="/signup"
+            element={
+              <Suspense>
+                <SignUp />
               </Suspense>
             }
           />

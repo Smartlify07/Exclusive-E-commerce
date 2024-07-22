@@ -13,6 +13,7 @@ import { useState } from "react";
 import { selectAllProducts } from "../app/products/productsSlice";
 import { toast } from "react-toastify";
 import { uid } from "uid";
+import { Link } from "react-router-dom";
 
 const ProductActions = (props) => {
   const user = useSelector(selectAuth);
@@ -27,10 +28,10 @@ const ProductActions = (props) => {
   const products = useSelector(selectAllProducts);
   const { id } = props;
   const handleAddToWishlist = async () => {
-    dispatch(
-      await addToWishList({
+    await dispatch(
+      addToWishList({
         userId,
-        id: props.id,
+        id,
         saleStart: props.saleStart,
         saleEnd: props.saleEnd,
         name: props.name,
@@ -44,7 +45,7 @@ const ProductActions = (props) => {
         stars: props.stars,
       })
     ).unwrap();
-    await notify("Added to wishlist");
+    notify("Added to wishlist");
   };
 
   const handleRemoveFromWishList = async () => {
@@ -81,8 +82,7 @@ const ProductActions = (props) => {
   let heart = null;
   if (wishListed || wishListProductId) {
     heart = <FaHeart className="text-lg fill-red" />;
-  } else if (wishListed === false || !wishListProductId) {
-    console.log("Removed");
+  } else if (wishListed === false && !wishListProductId) {
     heart = <FaRegHeart className="text-lg" />;
   }
 
@@ -105,9 +105,12 @@ const ProductActions = (props) => {
         </button>
       )}
       {!props.showDeleteButton && (
-        <button className="bg-white rounded-full flex items-center justify-center w-7 h-7">
+        <Link
+          to={`/products/${props.id}`}
+          className="bg-white rounded-full flex items-center justify-center w-7 h-7"
+        >
           <FaRegEye className="text-lg text-black" />
-        </button>
+        </Link>
       )}
       {props.showDeleteButton && (
         <button

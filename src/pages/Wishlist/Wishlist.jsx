@@ -17,20 +17,17 @@ const Wishlist = () => {
 
   const ProductList = withProductList(WishListProducts);
   useWishListProducts();
-  console.log(products);
-  // const status = useSelector(selectWishListStatus);
 
   return (
     <main className="py-5 font-poppins flex flex-col items-center justify-center  lg:px-0 lg:py-10">
       <div className="w-10/12">
         <WishListTopNav />
         <ToastContainer autoClose={3000} />
-        <div className="flex items-center py-5 justify-center w-full">
-          {status === "pending" && (
+        {status === "pending" && (
+          <div className="flex items-center py-5 justify-center w-full">
             <Loader message={"Getting wishlist items"} />
-          )}
-        </div>
-
+          </div>
+        )}
         <ProductList showDeleteButton products={products} />
         <JustForYou />
       </div>

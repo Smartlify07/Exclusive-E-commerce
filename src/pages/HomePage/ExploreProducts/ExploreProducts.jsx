@@ -3,13 +3,12 @@ import Ribbon from "../../../components/Ribbon";
 import SliderControls from "../../../components/SliderControls";
 import withProductList from "../../../HOCs/withProductList";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { selectAllProducts } from "../../../app/products/productsSlice";
+import { useProducts } from "../../../hooks/useProducts";
 
 const ExploreProducts = () => {
   const ExploreProductsList = lazy(() => import("./ExploreProductList"));
   const ProductsList = withProductList(ExploreProductsList);
-  const products = useSelector(selectAllProducts);
+  const { products } = useProducts();
   return (
     <section className="py-20 flex flex-col items-center">
       <div className="flex flex-col w-10/12 lg:w-full">

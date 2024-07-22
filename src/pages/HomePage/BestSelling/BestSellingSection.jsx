@@ -2,15 +2,14 @@ import { Link } from "react-router-dom";
 import Ribbon from "../../../components/Ribbon";
 import withProductList from "../../../HOCs/withProductList";
 import { lazy, Suspense } from "react";
-import { useSelector } from "react-redux";
 import { getBestSellingProducts } from "../../../../utils/functions/getProductCategories";
-import { selectAllProducts } from "../../../app/products/productsSlice";
+import { useProducts } from "../../../hooks/useProducts";
 
 const BestSellingSection = () => {
   const BestSellingProductsList = lazy(() =>
     import("./BestSellingProductsList")
   );
-  const products = useSelector(selectAllProducts);
+  const { products } = useProducts();
   const bestSellingProducts = getBestSellingProducts(products);
 
   const ProductList = withProductList(BestSellingProductsList);
