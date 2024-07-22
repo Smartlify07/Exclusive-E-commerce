@@ -5,7 +5,7 @@ export const withAuthNavbar = (AuthenticatedNavbar, NonAuthenticatedNavbar) => {
   const WithAuthNavbar = () => {
     const user = useSelector(selectAuth);
 
-    if (!user) {
+    if (!user.userId) {
       return <NonAuthenticatedNavbar />;
     } else {
       return <AuthenticatedNavbar />;

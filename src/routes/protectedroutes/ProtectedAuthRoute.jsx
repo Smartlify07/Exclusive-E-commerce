@@ -6,7 +6,7 @@ import { selectAuth } from "../../app/auth/authSlice";
 const ProtectedAuthRoute = ({ children }) => {
   const location = useLocation();
   const user = useSelector(selectAuth);
-  if (user) {
+  if (user?.userId) {
     return children;
   } else {
     return (
