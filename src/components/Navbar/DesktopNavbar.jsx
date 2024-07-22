@@ -6,6 +6,7 @@ import ActionIcons from "../ActionIcons";
 
 const DesktopNavbar = ({ children }) => {
   const activeNavClass = `border-b border-b-black py-1`;
+
   return (
     <nav className="hidden lg:flex flex-col items-center pt-10 pb-5 font-poppins border-b border-[#E3E3E3] md:items-center">
       <div className="flex justify-between items-center w-10/12 md:w-11/12 lg:w-10/12 md:justify-between">

@@ -2,11 +2,11 @@ import { Form, Formik } from "formik";
 import TextInput from "../../components/Form/TextInput";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
-import { selectUser, signIn } from "../../app/user/userSlice";
 import { useNavigate } from "react-router";
+import { selectAuth, signIn } from "../../app/auth/authSlice";
 
 const LoginForm = () => {
-  const user = useSelector(selectUser);
+  const user = useSelector(selectAuth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   return (

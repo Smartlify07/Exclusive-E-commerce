@@ -9,8 +9,9 @@ import { Provider } from "react-redux";
 import { store } from "./app/store";
 import { lazy, Suspense } from "react";
 import ProtectedAuthRoute from "./routes/protectedroutes/ProtectedAuthRoute";
+import "react-toastify/ReactToastify.min.css";
 import Wishlist from "./pages/Wishlist/Wishlist";
-
+import Cart from "./pages/Cart/Cart";
 function App() {
   const Homepage = lazy(() => import("./pages/HomePage/Homepage"));
   const SignUp = lazy(() => import("./pages/SignUp/SignUp"));
@@ -36,6 +37,14 @@ function App() {
             element={
               <ProtectedAuthRoute>
                 <Wishlist />
+              </ProtectedAuthRoute>
+            }
+          ></Route>
+          <Route
+            path="/cart"
+            element={
+              <ProtectedAuthRoute>
+                <Cart />
               </ProtectedAuthRoute>
             }
           ></Route>

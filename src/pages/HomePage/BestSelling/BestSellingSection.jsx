@@ -2,11 +2,17 @@ import { Link } from "react-router-dom";
 import Ribbon from "../../../components/Ribbon";
 import withProductList from "../../../HOCs/withProductList";
 import { lazy, Suspense } from "react";
+import { useSelector } from "react-redux";
+import { getBestSellingProducts } from "../../../../utils/functions/getProductCategories";
+import { selectAllProducts } from "../../../app/products/productsSlice";
 
 const BestSellingSection = () => {
   const BestSellingProductsList = lazy(() =>
     import("./BestSellingProductsList")
   );
+  const products = useSelector(selectAllProducts);
+  const bestSellingProducts = getBestSellingProducts(products);
+
   const ProductList = withProductList(BestSellingProductsList);
   return (
     <section className="py-10 flex flex-col items-center">
@@ -33,7 +39,7 @@ const BestSellingSection = () => {
             <div className="bg-gray-100 w-full h-[300px] rounded-sm"></div>
           }
         >
-          <ProductList type="flashsales" />
+          <ProductList products={bestSellingProducts.slice(0, 4)} />
         </Suspense>
       </div>
     </section>

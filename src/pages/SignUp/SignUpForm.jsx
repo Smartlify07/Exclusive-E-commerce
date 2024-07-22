@@ -1,14 +1,14 @@
 import { Form, Formik } from "formik";
 import TextInput from "../../components/Form/TextInput";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import * as Yup from "yup";
-import { selectUser, signUp } from "../../app/user/userSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { signUp } from "../../app/auth/authSlice";
+import { addUser } from "../../app/user/userSlice";
 
 const SignUpForm = () => {
   const dispatch = useDispatch();
-  const user = useSelector(selectUser);
-  const navigate = useNavigate();
+
   return (
     <div className="flex flex-col gap-3 self-center lg:w-4/12">
       <h1 className="text-black font-medium text-3xl">Create an account</h1>
@@ -24,19 +24,20 @@ const SignUpForm = () => {
         onSubmit={(values) => {
           console.log("submit");
 
-          const handleSignUp = () => {
+          const handleSignUp = async () => {
             const email = values.email;
             const password = values.password;
             const name = values.name;
-            dispatch(signUp({ email, password, name }));
-            console.log(typeof values.password);
-          };
+            const user = await dispatch(
+              signUp({ email, password, name })
+            ).unwrap();
+            if (user) {
+              console.log(user);
 
-          if (user) {
-            setTimeout(() => {
-              navigate("/");
-            }, 2000);
-          }
+              // dispatch(addUser(user));
+              dispatch(addUser({ user }));
+            }
+          };
 
           handleSignUp();
         }}

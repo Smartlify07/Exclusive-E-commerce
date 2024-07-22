@@ -21,7 +21,7 @@ const FlashSalesTimer = () => {
     }
   };
   useEffect(() => {
-    const deadline = "July, 19, 2024";
+    const deadline = "July, 25, 2024";
 
     const interval = setInterval(() => getTimeUntil(deadline), 1000);
     return () => clearInterval(interval);
