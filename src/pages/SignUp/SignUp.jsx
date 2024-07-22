@@ -6,7 +6,7 @@ import { selectAuth } from "../../app/auth/authSlice";
 const SignUp = () => {
   const user = useSelector(selectAuth);
 
-  if (user) {
+  if (user?.userId !== null) {
     return <Navigate to={"/"} />;
   }
   return (
