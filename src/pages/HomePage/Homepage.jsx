@@ -2,6 +2,8 @@ import { lazy, Suspense } from "react";
 import HomePageSkeleton from "./HomePageSkeleton";
 import ServiceHighlights from "./ServiceHighlights/ServiceHighlights";
 import { ToastContainer } from "react-toastify";
+import { useSelector } from "react-redux";
+import { selectAuth } from "../../app/auth/authSlice";
 
 const Homepage = () => {
   const CategoriesLinks = lazy(() => import("./CategoriesLinks"));
@@ -16,6 +18,9 @@ const Homepage = () => {
   const ExploreProducts = lazy(() =>
     import("./ExploreProducts/ExploreProducts")
   );
+
+  const user = useSelector(selectAuth);
+  console.log(user);
 
   return (
     <main role="main" className="py-7 font-poppins flex flex-col items-center">
