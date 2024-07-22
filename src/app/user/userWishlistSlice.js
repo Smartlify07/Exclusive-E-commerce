@@ -93,8 +93,8 @@ const wishlistSlice = createSlice({
         state.wishlistStatus = "successful";
         const products = action.payload.map((product) => ({
           ...product,
-          saleStart: product?.saleStart?.seconds, // Create a serializable property
-          saleEnd: product?.saleEnd?.seconds,
+          saleStart: product?.saleStart, // Create a serializable property
+          saleEnd: product?.saleEnd,
         }));
 
         userWishListProductsAdapter.upsertMany(state, products);

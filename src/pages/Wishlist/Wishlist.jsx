@@ -28,7 +28,6 @@ const Wishlist = () => {
             <Loader message={"Getting wishlist items"} />
           </div>
         )}
-        {""}
         <ProductList showDeleteButton products={products} />
         <JustForYou />
       </div>

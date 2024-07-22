@@ -5,7 +5,7 @@ import {
 } from "@reduxjs/toolkit";
 
 import { db } from "../../../firebaseconfig";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, Timestamp } from "firebase/firestore";
 
 const productsAdapter = createEntityAdapter();
 const initialState = productsAdapter.getInitialState({
@@ -38,8 +38,9 @@ const productsSlice = createSlice({
         state.productsStatus = "successful";
         const products = action.payload.map((product) => ({
           ...product,
-          saleStart: product?.saleStart?.seconds, // Create a serializable property
-          saleEnd: product?.saleEnd?.seconds,
+
+          saleStart: product?.saleStart?.toDate().getTime() / 1000, // Create a serializable property
+          saleEnd: product?.saleEnd?.toDate().getTime() / 1000,
         }));
 
         productsAdapter.upsertMany(state, products);

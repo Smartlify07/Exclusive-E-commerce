@@ -44,7 +44,7 @@ const ProductActions = (props) => {
         stars: props.stars,
       })
     ).unwrap();
-    await notify("Added to wishlist");
+    notify("Added to wishlist");
   };
 
   const handleRemoveFromWishList = async () => {
@@ -81,7 +81,7 @@ const ProductActions = (props) => {
   let heart = null;
   if (wishListed || wishListProductId) {
     heart = <FaHeart className="text-lg fill-red" />;
-  } else if (wishListed === false || !wishListProductId) {
+  } else if (wishListed === false && !wishListProductId) {
     heart = <FaRegHeart className="text-lg" />;
   }
 

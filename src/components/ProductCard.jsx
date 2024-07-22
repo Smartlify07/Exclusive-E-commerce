@@ -21,7 +21,10 @@ const ProductCard = (props) => {
     <div
       className="cursor-pointer  lg:w-[270px]"
       onMouseOut={removeHoverEffect}
-      onMouseOver={addHoverEffect}
+      onMouseOver={() => {
+        addHoverEffect();
+        console.log(props.saleStart);
+      }}
     >
       <div className="bg-[#f5f5f5] overflow-hidden w-full relative py-6 px-3 rounded-md flex flex-col lg:p-3 ">
         <div className="w-full relative  flex justify-between items-start">
