@@ -14,10 +14,8 @@ export const useProducts = () => {
   const user = useSelector(selectAuth);
 
   useEffect(() => {
-    if (user?.userId !== null) {
-      if (status === "idle") {
-        dispatch(fetchProducts());
-      }
+    if (status === "idle") {
+      dispatch(fetchProducts());
     }
   }, [status, dispatch, user]);
   return { products };
