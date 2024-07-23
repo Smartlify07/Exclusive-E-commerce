@@ -13,10 +13,11 @@ import { useState } from "react";
 import { selectAllProducts } from "../app/products/productsSlice";
 import { toast } from "react-toastify";
 import { uid } from "uid";
-import { Link, Navigate, useLocation } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 
 const ProductActions = (props) => {
   const user = useSelector(selectAuth);
+  const navigate = useNavigate();
   let userId;
   if (user) {
     userId = user.userId;
@@ -101,6 +102,7 @@ const ProductActions = (props) => {
                 handleAddToWishlist();
               }
             } else {
+              navigate("signup");
               return (
                 <Navigate to={"signup"} replace state={{ from: location }} />
               );
