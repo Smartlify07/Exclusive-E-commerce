@@ -13,7 +13,7 @@ const AuthenticatedNavbar = () => {
           onClick={() => {
             setShowDropDown((prevState) => !prevState);
           }}
-          onMouseLeave={() => {
+          onBlur={() => {
             setShowDropDown(false);
           }}
         >
