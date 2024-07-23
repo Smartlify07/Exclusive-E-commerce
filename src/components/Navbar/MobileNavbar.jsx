@@ -14,7 +14,7 @@ const MobileNavbar = ({ children }) => {
   };
 
   return (
-    <nav className="flex flex-col items-center pt-10 pb-5 font-poppins border-b border-[#E3E3E3] lg:hidden">
+    <nav className="flex relative flex-col items-center pt-10 pb-5 font-poppins border-b border-[#E3E3E3] lg:hidden">
       <div className="flex justify-between items-center w-10/12 relative">
         <Logo />
         <button

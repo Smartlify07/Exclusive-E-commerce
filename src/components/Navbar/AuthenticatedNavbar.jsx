@@ -1,20 +1,39 @@
-import { Link } from "react-router-dom";
 import DesktopNavbar from "./DesktopNavbar";
 import MobileNavbar from "./MobileNavbar";
+import { useState } from "react";
+import DropDown from "./DropDown";
 
 const AuthenticatedNavbar = () => {
+  const [showDropDown, setShowDropDown] = useState(false);
+
   return (
     <>
       <DesktopNavbar>
-        <Link to={"/account"}>
+        <button
+          onClick={() => {
+            setShowDropDown((prevState) => !prevState);
+          }}
+          onMouseLeave={() => {
+            setShowDropDown(false);
+          }}
+        >
           <img src="/images/icons/usericon.svg" alt="usericon" />
-        </Link>
+        </button>
+        {showDropDown && <DropDown />}
       </DesktopNavbar>
 
       <MobileNavbar>
-        <Link to={"/account"}>
+        <button
+          onClick={() => {
+            setShowDropDown((prevState) => !prevState);
+          }}
+          onMouseLeave={() => {
+            setShowDropDown(false);
+          }}
+        >
           <img src="/images/icons/usericon.svg" alt="usericon" />
-        </Link>
+        </button>
+        {showDropDown && <DropDown />}
       </MobileNavbar>
     </>
   );

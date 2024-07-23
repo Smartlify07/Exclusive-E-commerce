@@ -23,7 +23,6 @@ const ProductCard = (props) => {
       onMouseOut={removeHoverEffect}
       onMouseOver={() => {
         addHoverEffect();
-        console.log(props.saleStart);
       }}
     >
       <div className="bg-[#f5f5f5] overflow-hidden w-full relative py-6 px-3 rounded-md flex flex-col lg:p-3 ">

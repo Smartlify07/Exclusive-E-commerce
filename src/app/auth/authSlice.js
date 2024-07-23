@@ -70,6 +70,7 @@ export const signUp = createAsyncThunk(
       return userDetails;
     } catch (error) {
       console.error(error);
+      throw new Error(error.message);
     }
   }
 );
@@ -93,13 +94,13 @@ export const signIn = createAsyncThunk(
       return userDetails;
     } catch (error) {
       console.error(error);
+      throw new Error(error.message);
     }
   }
 );
 
 export const logOut = createAsyncThunk("auth/signout", async () => {
   signOut(auth);
-  console.log("Signed out successfully");
 });
 export const authSlice = createSlice({
   initialState,
@@ -122,21 +123,20 @@ export const authSlice = createSlice({
       .addCase(signUp.pending, (state) => {
         state.authStatus = "pending";
       })
-      .addCase(signUp.fulfilled, (state, action) => {
-        state.authStatus = "successful";
+      .addCase(signUp.fulfilled, (state) => {
+        state.authStatus = "logging";
         state.isAuthenticated = true;
-        state.user = action.payload;
       })
       .addCase(signUp.rejected, (state, action) => {
         state.authStatus = "rejected";
         state.authError = action.error.message;
-        console.log(action.error.message);
+        console.error(action.error.message);
       })
       .addCase(signIn.pending, (state) => {
         state.authStatus = "pending";
       })
       .addCase(signIn.fulfilled, (state, action) => {
-        state.authStatus = "successful";
+        state.authStatus = "authenticated";
         state.isAuthenticated = true;
         state.user = action.payload;
       })
@@ -145,14 +145,14 @@ export const authSlice = createSlice({
         state.authError = action.error.message;
       })
       .addCase(logOut.fulfilled, (state) => {
-        state.isAuthenticated = false;
+        state.isAuthenticated = true;
         state.user.userId = null;
         state.authStatus = "fulfilled";
       })
       .addCase(logOut.rejected, (state, action) => {
         state.authStatus = "rejected";
         state.authError = action.error.message;
-        console.log(action.error.message);
+        console.error(action.error.message);
       });
   },
 });

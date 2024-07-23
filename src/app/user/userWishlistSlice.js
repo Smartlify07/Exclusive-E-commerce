@@ -53,8 +53,6 @@ export const addToWishList = createAsyncThunk(
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        console.log("Added to wishlist");
-
         return {
           id: docRef.id,
           ...docSnap.data(),
@@ -73,7 +71,6 @@ export const removeFromWishList = createAsyncThunk(
   async ({ userId, id }) => {
     try {
       await deleteDoc(doc(db, "users", userId, "wishlist", id));
-      console.log(userId, id);
       return id;
     } catch (error) {
       console.error(error);

@@ -66,9 +66,7 @@ const ProductActions = (props) => {
 
   const toggleWishListed = (id) => {
     const product = products.find((product) => product.id === id);
-    console.log(product);
     if (product) {
-      console.log(product);
       setWishListed((prevState) => !prevState);
     }
   };

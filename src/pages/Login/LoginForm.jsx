@@ -2,13 +2,17 @@ import { Form, Formik } from "formik";
 import TextInput from "../../components/Form/TextInput";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router";
-import { selectAuth, signIn } from "../../app/auth/authSlice";
+import {
+  selectAuthError,
+  selectAuthStatus,
+  signIn,
+} from "../../app/auth/authSlice";
+import { notify } from "../../../utils/functions/notify";
 
 const LoginForm = () => {
-  const user = useSelector(selectAuth);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const authStatus = useSelector(selectAuthStatus);
+  const authError = useSelector(selectAuthError);
   return (
     <div className="flex flex-col gap-3">
       <h1 className="text-black font-medium text-4xl">Login to Exclusive</h1>
@@ -31,20 +35,14 @@ const LoginForm = () => {
           password: Yup.string().required("Your password is required"),
         })}
         onSubmit={(values) => {
-          console.log("submit");
-
           const handleSignIn = () => {
             const email = values.email;
             const password = values.password;
             dispatch(signIn({ email, password }));
           };
 
-          if (user) {
-            setTimeout(() => {
-              navigate("/", {
-                replace: true,
-              });
-            }, 2000);
+          if (authStatus === "rejected") {
+            notify(authError, "error");
           }
 
           handleSignIn();
@@ -61,7 +59,10 @@ const LoginForm = () => {
           </div>
 
           <div className="flex gap-5 mt-5 flex-col items-center justify-between lg:gap-0 lg:flex-row  lg:mt-4">
-            <button className="bg-red w-full rounded-[4px] py-4 px-12 text-white font-medium transition-all lg:w-auto hover:bg-[#db4443]">
+            <button
+              type="submit"
+              className="bg-red w-full rounded-[4px] py-4 px-12 text-white font-medium transition-all lg:w-auto hover:bg-[#db4443]"
+            >
               Log In
             </button>
 

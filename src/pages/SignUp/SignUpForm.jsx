@@ -1,14 +1,21 @@
 import { Form, Formik } from "formik";
 import TextInput from "../../components/Form/TextInput";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { useDispatch } from "react-redux";
-import { signUp } from "../../app/auth/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectAuthError,
+  selectAuthStatus,
+  signUp,
+} from "../../app/auth/authSlice";
 import { addUser } from "../../app/user/userSlice";
+import { notify } from "../../../utils/functions/notify";
 
 const SignUpForm = () => {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
+  const authStatus = useSelector(selectAuthStatus);
+  const authError = useSelector(selectAuthError);
   return (
     <div className="flex flex-col gap-3 self-center lg:w-4/12">
       <h1 className="text-black font-medium text-3xl">Create an account</h1>
@@ -22,8 +29,6 @@ const SignUpForm = () => {
           password: "",
         }}
         onSubmit={(values) => {
-          console.log("submit");
-
           const handleSignUp = async () => {
             const email = values.email;
             const password = values.password;
@@ -31,14 +36,14 @@ const SignUpForm = () => {
             const user = await dispatch(
               signUp({ email, password, name })
             ).unwrap();
-            if (user) {
-              console.log(user);
-
-              // dispatch(addUser(user));
+            if (user.userId !== null) {
+              navigate("/login");
               dispatch(addUser({ user }));
             }
           };
-
+          if (authStatus === "rejected") {
+            notify(authError, "error");
+          }
           handleSignUp();
         }}
         validationSchema={Yup.object({

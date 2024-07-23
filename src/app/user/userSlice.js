@@ -10,10 +10,7 @@ const initialState = {
 };
 
 export const addUser = createAsyncThunk("user/addUser", async ({ user }) => {
-  console.log(user);
   const docRef = doc(db, "users", user.userId);
-  console.log(docRef);
-  console.log(user);
   await setDoc(docRef, {
     ...user,
   });
@@ -25,9 +22,6 @@ const userSlice = createSlice({
   initialState,
   name: "user",
 
-  reducers: {
-    //     getUserId: (state) => {},
-  },
   extraReducers(builder) {
     builder
       .addCase(addUser.pending, (state) => {
@@ -36,8 +30,6 @@ const userSlice = createSlice({
       .addCase(addUser.fulfilled, (state, action) => {
         state.userStatus = "fulfilled";
         state.user = action.payload;
-        console.log(action.payload);
-        console.log(state.user);
         state.userId = action.payload.id;
       })
       .addCase(addUser.rejected, (state, action) => {
