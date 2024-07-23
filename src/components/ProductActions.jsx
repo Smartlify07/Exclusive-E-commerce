@@ -13,7 +13,7 @@ import { useState } from "react";
 import { selectAllProducts } from "../app/products/productsSlice";
 import { toast } from "react-toastify";
 import { uid } from "uid";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useLocation } from "react-router-dom";
 
 const ProductActions = (props) => {
   const user = useSelector(selectAuth);
@@ -24,6 +24,7 @@ const ProductActions = (props) => {
   useWishListProducts(); // get wishlist products on refresh
   const dispatch = useDispatch();
   const [wishListed, setWishListed] = useState(false);
+  const location = useLocation();
 
   const products = useSelector(selectAllProducts);
   const { id } = props;
@@ -91,12 +92,18 @@ const ProductActions = (props) => {
       {!props.showDeleteButton && (
         <button
           onClick={() => {
-            toggleWishListed(id);
+            if (userId !== null) {
+              toggleWishListed(id);
 
-            if (wishListProduct) {
-              handleRemoveFromWishList();
+              if (wishListProduct) {
+                handleRemoveFromWishList();
+              } else {
+                handleAddToWishlist();
+              }
             } else {
-              handleAddToWishlist();
+              return (
+                <Navigate to={"signup"} replace state={{ from: location }} />
+              );
             }
           }}
           className="bg-white rounded-full flex items-center justify-center w-7 h-7"

@@ -10,9 +10,7 @@ const ProtectedAuthRoute = ({ children }) => {
   if (user?.userId !== null) {
     return children;
   } else {
-    return (
-      <Navigate to={"/signup"} state={{ from: location }} replace></Navigate>
-    );
+    return <Navigate to={"/signup"} state={{ from: location }} replace />;
   }
 };
 

@@ -28,7 +28,7 @@ const ProductDetails = () => {
             <Rightsection product={product} id={id} />
           </div>
 
-          <div className="py-7 lg:py-10">
+          <div className="py-14 lg:py-24">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Ribbon />
